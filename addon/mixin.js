@@ -22,11 +22,9 @@ export default Ember.Mixin.create({
   },
 
   initializeBuffer: function(onlyTheseKeys) {
-    if(isArray(onlyTheseKeys) && onlyTheseKeys.length > 0) {
-      keys(this.buffer).forEach(function(key) {
-        if(onlyTheseKeys.contains(key)) {
-          delete this.buffer[key];
-        }
+    if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
+      onlyTheseKeys.forEach(function(key) {
+        delete this.buffer[key];
       }, this);
     }
     else {
@@ -90,7 +88,7 @@ export default Ember.Mixin.create({
 
     this.initializeBuffer(onlyTheseKeys);
 
-    if (keys(this.buffer).length === 0) {
+    if (empty(this.buffer)) {
       this.set('hasBufferedChanges', false);
     }
   },
@@ -109,7 +107,7 @@ export default Ember.Mixin.create({
       this.propertyDidChange(key);
     }, this);
 
-    if (keys(this.buffer).length === 0) {
+    if (empty(this.buffer)) {
       this.set('hasBufferedChanges', false);
     }
   }
