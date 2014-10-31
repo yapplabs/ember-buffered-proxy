@@ -24,6 +24,9 @@ buffer.set('firstName', 'Kris');
 
 buffer.get('firstName'); // => 'Kris'
 buffer.set('firstName.content', 'Stefan');
+
+buffer.applyBufferedChanges();
+
 ```
 
 Or you can grab the mixin directly
