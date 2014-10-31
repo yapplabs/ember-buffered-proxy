@@ -14,7 +14,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Kris Selden, Stefan Penner & Yapp Labs",
   "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.2.0",
