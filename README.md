@@ -1,6 +1,6 @@
 # Ember-buffered-proxy [![Build Status](https://travis-ci.org/yapplabs/ember-buffered-proxy.svg)](https://travis-ci.org/yapplabs/ember-buffered-proxy)
 
-A Ember Proxy the enables change buffering.
+A Ember Proxy the enables change buffering. Ever need to "hold back" property changes before they propogate? If so this may be the project for you.
 
 ## Usage
 
