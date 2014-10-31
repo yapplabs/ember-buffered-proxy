@@ -1,4 +1,4 @@
-# Ember-buffered-proxy
+# Ember-buffered-proxy [![Build Status](https://travis-ci.org/yapplabs/ember-buffered-proxy.svg)](https://travis-ci.org/yapplabs/ember-buffered-proxy)
 
 A Ember Proxy the enables change buffering.
 
