@@ -61,7 +61,7 @@ test("that it works", function() {
   equal(content.baz, 1);
 });
 
-test("that apply only these keys works", function() {
+test("that apply/discard only these keys works", function() {
   var BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
 
   var content = {
