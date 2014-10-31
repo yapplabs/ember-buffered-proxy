@@ -23,10 +23,22 @@ buffer.get('firstName'); // => 'stefan'
 buffer.set('firstName', 'Kris');
 
 buffer.get('firstName'); // => 'Kris'
-buffer.set('firstName.content', 'Stefan');
+buffer.get('firstName.content'); // => 'stefan'
 
 buffer.applyBufferedChanges();
 
+buffer.get('firstName'); // => 'Kris'
+buffer.get('firstName.content'); // => 'Kris'
+
+
+buffer.set('firstName', 'Luke');
+buffer.get('firstName'); // => 'Luke'
+buffer.get('firstName.content'); // => 'Kris'
+
+buffer.discardBufferedChanges();
+
+buffer.get('firstName'); // => 'Kris'
+buffer.get('firstName.content'); // => 'Kris'
 ```
 
 Or you can grab the mixin directly
