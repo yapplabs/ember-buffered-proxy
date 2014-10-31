@@ -1,6 +1,7 @@
 {
   "name": "ember-buffered-proxy",
-  "version": "0.1.0",
+  "description": "an Ember Object Proxy with change buffering",
+  "version": "0.1.1",
   "directories": {
     "doc": "doc",
     "test": "tests"

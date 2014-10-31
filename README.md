@@ -2,6 +2,49 @@
 
 This README outlines the details of collaborating on this Ember addon.
 
+## Usage
+
+```sh
+npm install --save-dev ember-buffered-proxy
+```
+
+```js
+import BufferedProxy from 'ember-buffered-proxy/proxy';
+
+var content = {
+  firstName: 'stefan'
+};
+
+var buffer = BufferedProxy.create({
+  content: content
+});
+
+buffer.get('firstName'); // => 'stefan'
+buffer.set('firstName', 'Kris');
+
+buffer.get('firstName'); // => 'Kris'
+buffer.set('firstName.content', 'Stefan');
+```
+
+Or you can grab the mixin directly
+
+```js
+import BufferedMixin from 'ember-buffered-proxy/mixin';
+
+var content = {
+  firstName: 'stefan'
+};
+
+var buffer = ObjectProxy.extend(BufferedMixin).create({
+  content: content
+});
+
+// same as above
+```
+
+
+
+
 ## Installation
 
 * `git clone` this repository
