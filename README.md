@@ -30,7 +30,6 @@ buffer.applyBufferedChanges();
 buffer.get('firstName'); // => 'Kris'
 buffer.get('firstName.content'); // => 'Kris'
 
-
 buffer.set('firstName', 'Luke');
 buffer.get('firstName'); // => 'Luke'
 buffer.get('firstName.content'); // => 'Kris'
