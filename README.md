@@ -1,6 +1,6 @@
 # Ember-buffered-proxy
 
-This README outlines the details of collaborating on this Ember addon.
+A Ember Proxy the enables change buffering.
 
 ## Usage
 
