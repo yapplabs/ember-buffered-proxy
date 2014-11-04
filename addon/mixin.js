@@ -3,6 +3,8 @@ import Ember from 'ember';
 var hasOwnProp = Object.prototype.hasOwnProperty;
 var get = Ember.get;
 var set = Ember.set;
+var keys = Ember.keys;
+var isArray = Ember.isArray;
 
 function empty(obj) {
   var key;
@@ -19,8 +21,15 @@ export default Ember.Mixin.create({
     this.hasBufferedChanges = false;
   },
 
-  initializeBuffer: function() {
-    this.buffer = {};
+  initializeBuffer: function(onlyTheseKeys) {
+    if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
+      onlyTheseKeys.forEach(function(key) {
+        delete this.buffer[key];
+      }, this);
+    }
+    else {
+      this.buffer = {};
+    }
   },
 
   unknownProperty: function(key) {
@@ -65,28 +74,41 @@ export default Ember.Mixin.create({
     return value;
   },
 
-  applyBufferedChanges: function() {
+  applyBufferedChanges: function(onlyTheseKeys) {
     var buffer = this.buffer;
     var content = this.get('content');
 
-    Ember.keys(buffer).forEach(function(key) {
+    keys(buffer).forEach(function(key) {
+      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+        return;
+      }
+
       set(content, key, buffer[key]);
     });
 
-    this.initializeBuffer();
-    this.set('hasBufferedChanges', false);
+    this.initializeBuffer(onlyTheseKeys);
+
+    if (empty(this.buffer)) {
+      this.set('hasBufferedChanges', false);
+    }
   },
 
-  discardBufferedChanges: function() {
+  discardBufferedChanges: function(onlyTheseKeys) {
     var buffer = this.buffer;
 
-    this.initializeBuffer();
+    this.initializeBuffer(onlyTheseKeys);
 
-    Ember.keys(buffer).forEach(function(key) {
+    keys(buffer).forEach(function(key) {
+      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+        return;
+      }
+
       this.propertyWillChange(key);
       this.propertyDidChange(key);
     }, this);
 
-    this.set('hasBufferedChanges', false);
+    if (empty(this.buffer)) {
+      this.set('hasBufferedChanges', false);
+    }
   }
 });

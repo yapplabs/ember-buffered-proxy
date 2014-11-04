@@ -23,21 +23,50 @@ buffer.get('firstName'); // => 'stefan'
 buffer.set('firstName', 'Kris');
 
 buffer.get('firstName'); // => 'Kris'
-buffer.get('firstName.content'); // => 'stefan'
+buffer.get('content.firstName'); // => 'stefan'
 
 buffer.applyBufferedChanges();
 
 buffer.get('firstName'); // => 'Kris'
-buffer.get('firstName.content'); // => 'Kris'
+buffer.get('content.firstName'); // => 'Kris'
 
 buffer.set('firstName', 'Luke');
 buffer.get('firstName'); // => 'Luke'
-buffer.get('firstName.content'); // => 'Kris'
+buffer.get('content.firstName'); // => 'Kris'
 
 buffer.discardBufferedChanges();
 
 buffer.get('firstName'); // => 'Kris'
-buffer.get('firstName.content'); // => 'Kris'
+buffer.get('content.firstName'); // => 'Kris'
+
+// Below demonstrates that applyBufferedChanges and discardBufferedChanges
+// can take an optional array of keys.
+
+buffer.set('email', 'example@example.com');
+buffer.get('email'); // => 'example@example.com'
+buffer.get('content.email'); // => undefined
+
+buffer.set('address', '123 paradise road');
+buffer.get('address'); // => '123 paradise road'
+buffer.get('content.address'); // => undefined
+
+buffer.applyBufferedChanges(['email']); // Only apply the email from the buffer
+
+buffer.get('email'); // => 'example@example.com'
+buffer.get('address'); // => '123 paradise road'
+buffer.get('content.email'); // => 'example@example.com'
+buffer.get('content.address'); // => undefined
+
+buffer.setProperties({
+  'email', 'sample@sample.com',
+  'address', '1717 rose street'
+});
+
+buffer.discardBufferedChanges(['address']); // Discard only the address property from the buffer
+
+buffer.get('email'); // => example@example.com
+buffer.get('address'); // => 1717 rose street
+
 ```
 
 Or you can grab the mixin directly
