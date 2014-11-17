@@ -66,7 +66,13 @@ buffer.discardBufferedChanges(['address']); // Discard only the address property
 
 buffer.get('email'); // => example@example.com
 buffer.get('address'); // => 1717 rose street
+```
 
+You can also use these shorter method names
+
+```js
+buffer.discardChanges(); // equivalent to buffer.discardBufferedChanges()
+buffer.applyChanges();   // equivalent to buffer.applyBufferedChanges()
 ```
 
 Or you can grab the mixin directly

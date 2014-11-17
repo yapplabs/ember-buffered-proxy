@@ -5,6 +5,13 @@ var get = Ember.get;
 var set = Ember.set;
 var keys = Ember.keys;
 var isArray = Ember.isArray;
+var computed = Ember.computed;
+
+function aliasMethod(methodName) {
+  return function() {
+    return this[methodName].apply(this, arguments);
+  };
+}
 
 function empty(obj) {
   var key;
@@ -20,6 +27,8 @@ export default Ember.Mixin.create({
     this.initializeBuffer();
     this.hasBufferedChanges = false;
   },
+
+  hasChanges: computed.readOnly('hasBufferedChanges'),
 
   initializeBuffer: function(onlyTheseKeys) {
     if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
@@ -93,6 +102,8 @@ export default Ember.Mixin.create({
     }
   },
 
+  applyChanges: aliasMethod('applyBufferedChanges'),
+
   discardBufferedChanges: function(onlyTheseKeys) {
     var buffer = this.buffer;
 
@@ -110,5 +121,7 @@ export default Ember.Mixin.create({
     if (empty(this.buffer)) {
       this.set('hasBufferedChanges', false);
     }
-  }
+  },
+
+  discardChanges: aliasMethod('discardBufferedChanges'),
 });
