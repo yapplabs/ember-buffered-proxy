@@ -156,3 +156,23 @@ test("that apply/discard only these keys works", function() {
   equal(proxy.get('baz'), 1);
   equal(content.baz, 1);
 });
+
+test("aliased methods work", function() {
+  var BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+
+  var proxy = BufferedProxy.create({
+    content: { property: 1 }
+  });
+
+  proxy.set('property', 2);
+  ok(proxy.get('hasChanges'), "Modified proxy has changes");
+
+  proxy.applyChanges();
+  equal(proxy.get('content.property'), 2, "Applying changes sets the content's property");
+  ok(!(proxy.get('hasChanges')), "Proxy has no changes after changes are applied");
+
+  proxy.set('baz', 3);
+  proxy.discardChanges();
+  equal(proxy.get('property'), 2, "Discarding changes resets the proxy's property");
+  ok(!(proxy.get('hasChanges')), "Proxy has no changes after changes are discarded");
+});
