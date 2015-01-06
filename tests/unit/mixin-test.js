@@ -1,13 +1,13 @@
-import Mixin from 'ember-buffered-proxy/mixin';
 import Ember from 'ember';
+import Mixin from 'ember-buffered-proxy/mixin';
 
-module("ember-buffered-proxy/mixin");
+module('ember-buffered-proxy/mixin');
 
-test("exists", function() {
+test('exists', function() {
   ok(Mixin);
 });
 
-test("that it works", function() {
+test('that it works', function() {
   var BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
 
   var content = {
@@ -61,7 +61,7 @@ test("that it works", function() {
   equal(content.baz, 1);
 });
 
-test("that apply/discard only these keys works", function() {
+test('that apply/discard only these keys works', function() {
   var BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
 
   var content = {
@@ -157,7 +157,7 @@ test("that apply/discard only these keys works", function() {
   equal(content.baz, 1);
 });
 
-test("aliased methods work", function() {
+test('aliased methods work', function() {
   var BufferedProxy = Ember.ObjectProxy.extend(Mixin);
 
   var proxy = BufferedProxy.create({
@@ -165,14 +165,14 @@ test("aliased methods work", function() {
   });
 
   proxy.set('property', 2);
-  ok(proxy.get('hasChanges'), "Modified proxy has changes");
+  ok(proxy.get('hasChanges'), 'Modified proxy has changes');
 
   proxy.applyChanges();
-  equal(proxy.get('content.property'), 2, "Applying changes sets the content's property");
-  ok(!(proxy.get('hasChanges')), "Proxy has no changes after changes are applied");
+  equal(proxy.get('content.property'), 2, 'Applying changes sets the content\'s property');
+  ok(!(proxy.get('hasChanges')), 'Proxy has no changes after changes are applied');
 
   proxy.set('baz', 3);
   proxy.discardChanges();
-  equal(proxy.get('property'), 2, "Discarding changes resets the proxy's property");
-  ok(!(proxy.get('hasChanges')), "Proxy has no changes after changes are discarded");
+  equal(proxy.get('property'), 2, 'Discarding changes resets the proxy\'s property');
+  ok(!(proxy.get('hasChanges')), 'Proxy has no changes after changes are discarded');
 });

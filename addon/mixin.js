@@ -1,34 +1,22 @@
 import Ember from 'ember';
+import {aliasMethod, empty} from './helpers';
 
-var hasOwnProp = Object.prototype.hasOwnProperty;
-var get = Ember.get;
-var set = Ember.set;
-var keys = Ember.keys;
-var isArray = Ember.isArray;
-var computed = Ember.computed;
-
-function aliasMethod(methodName) {
-  return function() {
-    return this[methodName].apply(this, arguments);
-  };
-}
-
-function empty(obj) {
-  var key;
-  for (key in obj) {
-    if (!hasOwnProp.call(obj, key)) { continue; }
-    return false;
-  }
-  return true;
-}
+var get        = Ember.get;
+var set        = Ember.set;
+var keys       = Ember.keys;
+var isArray    = Ember.isArray;
+var computed   = Ember.computed;
 
 export default Ember.Mixin.create({
+
+  hasChanges     : computed.readOnly('hasBufferedChanges'),
+  applyChanges   : aliasMethod('applyBufferedChanges'),
+  discardChanges : aliasMethod('discardBufferedChanges'),
+
   init: function() {
     this.initializeBuffer();
     this.hasBufferedChanges = false;
   },
-
-  hasChanges: computed.readOnly('hasBufferedChanges'),
 
   initializeBuffer: function(onlyTheseKeys) {
     if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
@@ -52,15 +40,16 @@ export default Ember.Mixin.create({
   },
 
   setUnknownProperty: function(key, value) {
-    var buffer = this.buffer;
+    var buffer  = this.buffer;
     var content = this.get('content');
     var current;
+    var previous;
 
     if (content != null) {
       current = get(content, key);
     }
 
-    var previous = buffer.hasOwnProperty(key) ? buffer[key] : current;
+    previous = buffer.hasOwnProperty(key) ? buffer[key] : current;
 
     if (previous === value) {
       return;
@@ -84,7 +73,7 @@ export default Ember.Mixin.create({
   },
 
   applyBufferedChanges: function(onlyTheseKeys) {
-    var buffer = this.buffer;
+    var buffer  = this.buffer;
     var content = this.get('content');
 
     keys(buffer).forEach(function(key) {
@@ -101,8 +90,6 @@ export default Ember.Mixin.create({
       this.set('hasBufferedChanges', false);
     }
   },
-
-  applyChanges: aliasMethod('applyBufferedChanges'),
 
   discardBufferedChanges: function(onlyTheseKeys) {
     var buffer = this.buffer;
@@ -121,7 +108,5 @@ export default Ember.Mixin.create({
     if (empty(this.buffer)) {
       this.set('hasBufferedChanges', false);
     }
-  },
-
-  discardChanges: aliasMethod('discardBufferedChanges'),
+  }
 });
