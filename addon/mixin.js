@@ -16,6 +16,7 @@ export default Ember.Mixin.create({
   init: function() {
     this.initializeBuffer();
     this.hasBufferedChanges = false;
+    this._super.apply(this, arguments);
   },
 
   initializeBuffer: function(onlyTheseKeys) {
