@@ -1,5 +1,8 @@
 import Ember from 'ember';
-import {aliasMethod, empty} from './helpers';
+import {
+  aliasMethod,
+  empty
+} from './helpers';
 
 var get        = Ember.get;
 var set        = Ember.set;
@@ -7,8 +10,9 @@ var keys       = Ember.keys;
 var isArray    = Ember.isArray;
 var computed   = Ember.computed;
 
-export default Ember.Mixin.create({
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
+export default Ember.Mixin.create({
   hasChanges     : computed.readOnly('hasBufferedChanges'),
   applyChanges   : aliasMethod('applyBufferedChanges'),
   discardChanges : aliasMethod('discardBufferedChanges'),
@@ -26,14 +30,14 @@ export default Ember.Mixin.create({
       }, this);
     }
     else {
-      this.buffer = {};
+      this.buffer = Ember.create(null);
     }
   },
 
   unknownProperty: function(key) {
     var buffer = this.buffer;
 
-    if (buffer.hasOwnProperty(key)) {
+    if (hasOwnProperty.call(buffer, key)) {
       return buffer[key];
     } else {
       return this._super(key);
@@ -50,7 +54,7 @@ export default Ember.Mixin.create({
       current = get(content, key);
     }
 
-    previous = buffer.hasOwnProperty(key) ? buffer[key] : current;
+    previous = hasOwnProperty.call(buffer, key) ? buffer[key] : current;
 
     if (previous === value) {
       return;

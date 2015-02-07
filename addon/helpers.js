@@ -1,12 +1,12 @@
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
-function aliasMethod(methodName) {
+export function aliasMethod(methodName) {
   return function() {
     return this[methodName].apply(this, arguments);
   };
 }
 
-function empty(obj) {
+export function empty(obj) {
   var key;
   for (key in obj) {
     if (!hasOwnProp.call(obj, key)) { continue; }
@@ -14,5 +14,3 @@ function empty(obj) {
   }
   return true;
 }
-
-export { aliasMethod, empty };
