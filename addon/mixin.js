@@ -10,7 +10,7 @@ var keys       = Ember.keys;
 var isArray    = Ember.isArray;
 var computed   = Ember.computed;
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
+var hasOwnProp = Object.prototype.hasOwnProperty;
 
 export default Ember.Mixin.create({
   hasChanges     : computed.readOnly('hasBufferedChanges'),
@@ -37,7 +37,7 @@ export default Ember.Mixin.create({
   unknownProperty: function(key) {
     var buffer = this.buffer;
 
-    if (hasOwnProperty.call(buffer, key)) {
+    if (hasOwnProp.call(buffer, key)) {
       return buffer[key];
     } else {
       return this._super(key);
@@ -54,7 +54,7 @@ export default Ember.Mixin.create({
       current = get(content, key);
     }
 
-    previous = hasOwnProperty.call(buffer, key) ? buffer[key] : current;
+    previous = hasOwnProp.call(buffer, key) ? buffer[key] : current;
 
     if (previous === value) {
       return;

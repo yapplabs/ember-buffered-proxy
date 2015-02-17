@@ -1,10 +1,15 @@
+/* global equal, ok */
 import Ember from 'ember';
 import Mixin from 'ember-buffered-proxy/mixin';
+import {
+  module,
+  test
+} from 'qunit';
 
 module('ember-buffered-proxy/mixin');
 
-test('exists', function() {
-  ok(Mixin);
+test('exists', function(assert) {
+  assert.ok(Mixin);
 });
 
 test('that it works', function() {
