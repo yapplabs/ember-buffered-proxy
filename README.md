@@ -25,13 +25,13 @@ buffer.set('firstName', 'Kris');
 buffer.get('firstName'); // => 'Kris'
 buffer.get('content.firstName'); // => 'stefan'
 
-buffer.get('hasChanges');// => true
+buffer.get('hasChanges'); // => true
 
 buffer.applyBufferedChanges();
 
 buffer.get('firstName'); // => 'Kris'
 buffer.get('content.firstName'); // => 'Kris'
-buffer.get('hasChanges');// => false
+buffer.get('hasChanges'); // => false
 
 buffer.set('firstName', 'Luke');
 buffer.get('firstName'); // => 'Luke'
