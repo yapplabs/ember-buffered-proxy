@@ -6,7 +6,8 @@ import {
 
 var get        = Ember.get;
 var set        = Ember.set;
-var keys       = Object.keys;
+var keys       = Object.keys || Ember.keys;
+var create     = Object.create || Ember.create;
 var isArray    = Ember.isArray;
 var computed   = Ember.computed;
 
@@ -30,7 +31,7 @@ export default Ember.Mixin.create({
       }, this);
     }
     else {
-      this.buffer = Object.create(null);
+      this.buffer = create(null);
     }
   },
 
