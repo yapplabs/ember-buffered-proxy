@@ -2,6 +2,10 @@
 
 An Ember Object Proxy (and mixin) the enables change buffering. Ever need to "hold back" property changes before they propogate? If so this may be the project for you.
 
+## DEPRECATED
+
+This project has been deprecated in light of the move away from proxy objects in Ember 2.0. It still works in Ember 1.x, but it uses private APIs, so may not continue to work for 2.0. For an alternative approach, check out @krisselden's [example](https://github.com/krisselden/draft-sample).
+
 ## Usage
 
 ```sh
