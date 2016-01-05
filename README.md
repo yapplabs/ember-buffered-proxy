@@ -26,6 +26,7 @@ buffer.get('firstName'); // => 'Kris'
 buffer.get('content.firstName'); // => 'stefan'
 
 buffer.get('hasChanges'); // => true
+buffer.buffer; // => (get an object describing changed keys) -- {"firstName": "Kris"}
 
 buffer.applyBufferedChanges();
 
