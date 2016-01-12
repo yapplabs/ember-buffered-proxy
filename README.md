@@ -68,8 +68,8 @@ buffer.setProperties({
 
 buffer.discardBufferedChanges(['address']); // Discard only the address property from the buffer
 
-buffer.get('email'); // => example@example.com
-buffer.get('address'); // => 1717 rose street
+buffer.get('email'); // => sample@sample.com
+buffer.get('address'); // => undefined
 ```
 
 You can also use these shorter method names
