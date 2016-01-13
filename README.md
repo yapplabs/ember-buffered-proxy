@@ -62,8 +62,8 @@ buffer.get('content.email'); // => 'example@example.com'
 buffer.get('content.address'); // => undefined
 
 buffer.setProperties({
-  'email', 'sample@sample.com',
-  'address', '1717 rose street'
+  email: 'sample@sample.com',
+  address: '1717 rose street'
 });
 
 buffer.discardBufferedChanges(['address']); // Discard only the address property from the buffer
