@@ -97,6 +97,20 @@ var buffer = ObjectProxy.extend(BufferedMixin).create({
 // same as above
 ```
 
+You can also customize the function that is used to determine equality between
+values:
+
+```js
+const CustomBufferedProxy = BufferedProxy.extend({
+  isEqual(a, b, key) {
+    if (key === 'foo') {
+      return customComparisonFn(a, b);
+    } else {
+      return this._super(...arguments);
+    }
+  }
+};
+```
 
 ## development
 

@@ -67,13 +67,13 @@ export default Ember.Mixin.create({
 
     previous = hasOwnProp.call(buffer, key) ? buffer[key] : current;
 
-    if (previous === value) {
+    if (this.isEqual(previous, value, key)) {
       return;
     }
 
     this.propertyWillChange(key);
 
-    if (current === value) {
+    if (this.isEqual(current, value, key)) {
       delete buffer[key];
       if (empty(buffer)) {
         set(this, 'hasBufferedChanges', false);
@@ -141,5 +141,31 @@ export default Ember.Mixin.create({
     }
 
     return false;
+  },
+
+  /**
+    Determines if two values are equal.
+    This is used to determine if a value being set is equal to the buffered
+    value. This is also used to determine if the value being set is equal to the value
+    in the underlying content.
+
+    This can be overridden if you wish to do a custom value comparison:
+
+    ```js
+    const CustomBufferedProxy = BufferedProxy.extend({
+      isEqual(a, b, key) {
+        if (key === 'foo') {
+          return customComparisonFn(a, b);
+        } else {
+          return this._super(...arguments);
+        }
+      }
+    };
+    ```
+
+    @return {Boolean}
+  */
+  isEqual(a, b) {
+    return a === b;
   }
 });
