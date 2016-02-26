@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 import BufferedMixin from 'ember-buffered-proxy/mixin';
 import {

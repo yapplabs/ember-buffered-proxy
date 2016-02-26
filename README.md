@@ -5,7 +5,7 @@ An Ember Object Proxy (and mixin) the enables change buffering. Ever need to "ho
 ## Usage
 
 ```sh
-npm install --save-dev ember-buffered-proxy
+ember install ember-buffered-proxy
 ```
 
 ```js
