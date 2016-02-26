@@ -83,7 +83,7 @@ export default Ember.Mixin.create({
     var content = this.get('content');
 
     keys(buffer).forEach(function(key) {
-      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+      if (isArray(onlyTheseKeys) && !Ember.A(onlyTheseKeys).contains(key)) {
         return;
       }
 
@@ -103,7 +103,7 @@ export default Ember.Mixin.create({
     this.initializeBuffer(onlyTheseKeys);
 
     keys(buffer).forEach(function(key) {
-      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+      if (isArray(onlyTheseKeys) && !Ember.A(onlyTheseKeys).contains(key)) {
         return;
       }
 
