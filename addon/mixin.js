@@ -46,6 +46,15 @@ export default Ember.Mixin.create({
   },
 
   setUnknownProperty: function(key, value) {
+    var m = meta(this);
+
+    if (m.proto === this) {
+      // if marked as prototype then just defineProperty
+      // rather than delegate
+      defineProperty(this, key, null, value);
+      return value;
+    }
+
     var buffer  = this.buffer;
     var content = this.get('content');
     var current;
