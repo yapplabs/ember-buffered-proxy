@@ -4,14 +4,16 @@ import {
   empty
 } from './helpers';
 
-var get        = Ember.get;
-var set        = Ember.set;
-var keys       = Object.keys || Ember.keys;
-var create     = Object.create || Ember.create;
-var isArray    = Ember.isArray;
-var computed   = Ember.computed;
+var get            = Ember.get;
+var set            = Ember.set;
+var keys           = Object.keys || Ember.keys;
+var create         = Object.create || Ember.create;
+var isArray        = Ember.isArray;
+var computed       = Ember.computed;
+var meta           = Ember.meta;
+var defineProperty = Ember.defineProperty;
 
-var hasOwnProp = Object.prototype.hasOwnProperty;
+var hasOwnProp     = Object.prototype.hasOwnProperty;
 
 export default Ember.Mixin.create({
   hasChanges     : computed.readOnly('hasBufferedChanges'),
@@ -46,6 +48,15 @@ export default Ember.Mixin.create({
   },
 
   setUnknownProperty: function(key, value) {
+    var m = meta(this);
+
+    if (m.proto === this) {
+      // if marked as prototype then just defineProperty
+      // rather than delegate
+      defineProperty(this, key, null, value);
+      return value;
+    }
+
     var buffer  = this.buffer;
     var content = this.get('content');
     var current;
