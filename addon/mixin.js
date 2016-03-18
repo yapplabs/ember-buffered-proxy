@@ -4,14 +4,16 @@ import {
   empty
 } from './helpers';
 
-var get        = Ember.get;
-var set        = Ember.set;
-var keys       = Object.keys || Ember.keys;
-var create     = Object.create || Ember.create;
-var isArray    = Ember.isArray;
-var computed   = Ember.computed;
+var get            = Ember.get;
+var set            = Ember.set;
+var keys           = Object.keys || Ember.keys;
+var create         = Object.create || Ember.create;
+var isArray        = Ember.isArray;
+var computed       = Ember.computed;
+var meta           = Ember.meta;
+var defineProperty = Ember.defineProperty;
 
-var hasOwnProp = Object.prototype.hasOwnProperty;
+var hasOwnProp     = Object.prototype.hasOwnProperty;
 
 export default Ember.Mixin.create({
   hasChanges     : computed.readOnly('hasBufferedChanges'),
