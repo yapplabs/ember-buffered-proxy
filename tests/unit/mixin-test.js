@@ -163,3 +163,17 @@ test('aliased methods work', (assert) => {
   assert.equal(get(proxy, 'property'), 2, 'Discarding changes resets the proxy\'s property');
   assert.ok(!(get(proxy, 'hasChanges')), 'Proxy has no changes after changes are discarded');
 });
+
+test('allows passing other variables at .create time', (assert) => {
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const fakeContainer = Ember.Object.create({});
+
+  var proxy = BufferedProxy.create({
+    content: { property: 1 },
+    container: fakeContainer,
+    foo: 'foo',
+  });
+
+  assert.equal(proxy.get('container'), fakeContainer, 'Proxy didn\'t allow defining container property at create time');
+  assert.equal(proxy.get('foo'), 'foo', 'Proxy didn\'t allow setting an arbitrary value at create time');
+});
