@@ -10,10 +10,10 @@ const { get, set } = Ember;
 module('ember-buffered-proxy/mixin');
 
 test('that it works', (assert) => {
-  const BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
   const content = { baz: 1 };
 
-  const proxy = BufferedPorxy.create({ content });
+  const proxy = BufferedProxy.create({ content });
 
   assert.equal(get(proxy, 'baz'), 1);
   assert.equal(get(content, 'baz'), 1);
@@ -59,10 +59,10 @@ test('that it works', (assert) => {
 });
 
 test('that apply/discard only these keys works', (assert) => {
-  const BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
   const content = { baz: 1, world: 'hello' };
 
-  const proxy = BufferedPorxy.create({ content });
+  const proxy = BufferedProxy.create({ content });
 
   assert.equal(get(proxy, 'baz'), 1);
   assert.equal(get(content, 'baz'), 1);
