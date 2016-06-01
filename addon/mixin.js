@@ -4,52 +4,45 @@ import {
   empty
 } from './helpers';
 
-var get        = Ember.get;
-var set        = Ember.set;
-var keys       = Object.keys || Ember.keys;
-var create     = Object.create || Ember.create;
-var isArray    = Ember.isArray;
-var computed   = Ember.computed;
+const { get, set, isArray, computed, getProperties } = Ember;
 
-var hasOwnProp = Object.prototype.hasOwnProperty;
+const keys = Object.keys || Ember.keys;
+const create = Object.create || Ember.create;
+const hasOwnProp = Object.prototype.hasOwnProperty;
 
 export default Ember.Mixin.create({
-  hasChanges     : computed.readOnly('hasBufferedChanges'),
-  applyChanges   : aliasMethod('applyBufferedChanges'),
+  buffer: null,
+  hasBufferedChanges: false,
+  
+  hasChanges: computed.readOnly('hasBufferedChanges'),
+  applyChanges: aliasMethod('applyBufferedChanges'),
   discardChanges : aliasMethod('discardBufferedChanges'),
 
-  init: function() {
+  init() {
     this.initializeBuffer();
-    this.hasBufferedChanges = false;
-    this._super.apply(this, arguments);
+    set(this, 'hasBufferedChanges', false);
+    this._super(...arguments);
   },
 
-  initializeBuffer: function(onlyTheseKeys) {
+  initializeBuffer(onlyTheseKeys) {
     if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
-      onlyTheseKeys.forEach(function(key) {
-        delete this.buffer[key];
-      }, this);
+      onlyTheseKeys.forEach((key) => delete this.buffer[key]);
     }
     else {
-      this.buffer = create(null);
+      set(this, 'buffer', create(null));
     }
   },
 
-  unknownProperty: function(key) {
-    var buffer = this.buffer;
+  unknownProperty(key) {
+    const buffer = get(this, 'buffer');
 
-    if (hasOwnProp.call(buffer, key)) {
-      return buffer[key];
-    } else {
-      return this._super(key);
-    }
+    return (hasOwnProp.call(buffer, key)) ? buffer[key] : this._super(key);
   },
 
-  setUnknownProperty: function(key, value) {
-    var buffer  = this.buffer;
-    var content = this.get('content');
-    var current;
-    var previous;
+  setUnknownProperty(key, value) {
+    const { buffer, content } = getProperties(this, ['buffer', 'content']);
+    let current;
+    let previous;
 
     if (content != null) {
       current = get(content, key);
@@ -66,11 +59,11 @@ export default Ember.Mixin.create({
     if (current === value) {
       delete buffer[key];
       if (empty(buffer)) {
-        this.set('hasBufferedChanges', false);
+        set(this, 'hasBufferedChanges', false);
       }
     } else {
       buffer[key] = value;
-      this.set('hasBufferedChanges', true);
+      set(this, 'hasBufferedChanges', true);
     }
 
     this.propertyDidChange(key);
@@ -78,12 +71,11 @@ export default Ember.Mixin.create({
     return value;
   },
 
-  applyBufferedChanges: function(onlyTheseKeys) {
-    var buffer  = this.buffer;
-    var content = this.get('content');
+  applyBufferedChanges(onlyTheseKeys) {
+    const { buffer, content } = getProperties(this, ['buffer', 'content']);
 
-    keys(buffer).forEach(function(key) {
-      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+    keys(buffer).forEach((key) => {
+      if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
         return;
       }
 
@@ -92,27 +84,27 @@ export default Ember.Mixin.create({
 
     this.initializeBuffer(onlyTheseKeys);
 
-    if (empty(this.buffer)) {
-      this.set('hasBufferedChanges', false);
+    if (empty(get(this, 'buffer'))) {
+      set(this, 'hasBufferedChanges', false);
     }
   },
 
-  discardBufferedChanges: function(onlyTheseKeys) {
-    var buffer = this.buffer;
+  discardBufferedChanges(onlyTheseKeys) {
+    const buffer = get(this, 'buffer');
 
     this.initializeBuffer(onlyTheseKeys);
 
-    keys(buffer).forEach(function(key) {
-      if (isArray(onlyTheseKeys) && !onlyTheseKeys.contains(key)) {
+    keys(buffer).forEach((key) => {
+      if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
         return;
       }
 
       this.propertyWillChange(key);
       this.propertyDidChange(key);
-    }, this);
+    });
 
-    if (empty(this.buffer)) {
-      this.set('hasBufferedChanges', false);
+    if (empty(get(this, 'buffer'))) {
+      set(this, 'hasBufferedChanges', false);
     }
   }
 });

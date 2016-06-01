@@ -1,4 +1,3 @@
-/* global equal, ok */
 import Ember from 'ember';
 import Mixin from 'ember-buffered-proxy/mixin';
 import {
@@ -6,178 +5,161 @@ import {
   test
 } from 'qunit';
 
+const { get, set } = Ember;
+
 module('ember-buffered-proxy/mixin');
 
-test('exists', function(assert) {
-  assert.ok(Mixin);
-});
+test('that it works', (assert) => {
+  const BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+  const content = { baz: 1 };
 
-test('that it works', function() {
-  var BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+  const proxy = BufferedPorxy.create({ content });
 
-  var content = {
-    baz: 1
-  };
+  assert.equal(get(proxy, 'baz'), 1);
+  assert.equal(get(content, 'baz'), 1);
 
-  var proxy = BufferedPorxy.create({
-    content: content
-  });
+  assert.ok(!('foo' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
 
-  equal(proxy.get('baz'), 1);
-  equal(content.baz, 1);
+  set(proxy, 'foo', 1);
 
-  ok(!('foo' in content));
-  equal(proxy.get('hasBufferedChanges'), false);
-
-  proxy.set('foo', 1);
-
-  equal(proxy.get('foo'), 1);
-  ok(!('foo' in content));
-  equal(proxy.get('hasBufferedChanges'), true);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.ok(!('foo' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
   proxy.applyBufferedChanges();
 
-  equal(proxy.get('foo'), 1);
-  ok('foo' in content);
-  equal(proxy.get('hasBufferedChanges'), false);
-  equal(content.foo, 1);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.ok('foo' in content);
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
+  assert.equal(get(content, 'foo'), 1);
 
-  proxy.set('bar', 1);
+  set(proxy, 'bar', 1);
 
-  equal(proxy.get('foo'), 1);
-  equal(proxy.get('bar'), 1);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.equal(get(proxy, 'bar'), 1);
 
-  ok('foo' in content);
-  ok(!('bar' in content));
+  assert.ok('foo' in content);
+  assert.ok(!('bar' in content));
 
-  equal(proxy.get('hasBufferedChanges'), true);
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
   proxy.discardBufferedChanges();
 
-  equal(proxy.get('foo'), 1);
-  equal(proxy.get('bar'), undefined);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.equal(get(proxy, 'bar'), undefined);
 
-  ok('foo' in content);
-  ok(!('bar' in content));
+  assert.ok('foo' in content);
+  assert.ok(!('bar' in content));
 
-  equal(proxy.get('hasBufferedChanges'), false);
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
 
-  equal(proxy.get('baz'), 1);
-  equal(content.baz, 1);
+  assert.equal(get(proxy, 'baz'), 1);
+  assert.equal(get(content, 'baz'), 1);
 });
 
-test('that apply/discard only these keys works', function() {
-  var BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+test('that apply/discard only these keys works', (assert) => {
+  const BufferedPorxy = Ember.ObjectProxy.extend(Mixin);
+  const content = { baz: 1, world: 'hello' };
 
-  var content = {
-    baz: 1,
-    world: 'hello'
-  };
+  const proxy = BufferedPorxy.create({ content });
 
-  var proxy = BufferedPorxy.create({
-    content: content
-  });
+  assert.equal(get(proxy, 'baz'), 1);
+  assert.equal(get(content, 'baz'), 1);
+  assert.equal(get(proxy, 'world'), 'hello');
+  assert.equal(get(content, 'world'), 'hello');
 
-  equal(proxy.get('baz'), 1);
-  equal(content.baz, 1);
-  equal(proxy.get('world'), 'hello');
-  equal(content.world, 'hello');
+  assert.ok(!('foo' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
 
-  ok(!('foo' in content));
-  equal(proxy.get('hasBufferedChanges'), false);
+  set(proxy, 'foo', 1);
 
-  proxy.set('foo', 1);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.ok(!('foo' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
-  equal(proxy.get('foo'), 1);
-  ok(!('foo' in content));
-  equal(proxy.get('hasBufferedChanges'), true);
+  set(proxy, 'testing', '1234');
 
-  proxy.set('testing', '1234');
-
-  equal(proxy.get('testing'), '1234');
-  ok(!('testing' in content));
-  equal(proxy.get('hasBufferedChanges'), true);
+  assert.equal(get(proxy, 'testing'), '1234');
+  assert.ok(!('testing' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
   proxy.applyBufferedChanges(['foo']);
 
-  equal(proxy.get('foo'), 1);
-  ok('foo' in content);
-  ok(!('testing' in content));
-  equal(proxy.get('hasBufferedChanges'), true);
-  equal(content.foo, 1);
-  equal(proxy.get('testing'), '1234');
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.ok('foo' in content);
+  assert.ok(!('testing' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
+  assert.equal(get(content, 'foo'), 1);
+  assert.equal(get(proxy, 'testing'), '1234');
 
   proxy.applyBufferedChanges(['testing']);
 
-  equal(proxy.get('testing'), '1234');
-  ok('testing' in content);
-  equal(proxy.get('hasBufferedChanges'), false);
-  equal(content.testing, '1234');
+  assert.equal(get(proxy, 'testing'), '1234');
+  assert.ok('testing' in content);
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
+  assert.equal(get(content, 'testing'), '1234');
 
   // Testing discardBufferdChanges with onlyTheseKeys
 
-  proxy.setProperties({
-    bar: 2,
-    example: 123
-  });
+  proxy.setProperties({ bar: 2, example: 123 });
 
-  equal(proxy.get('foo'), 1);
-  equal(proxy.get('bar'), 2);
-  equal(proxy.get('example'), 123);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.equal(get(proxy, 'bar'), 2);
+  assert.equal(get(proxy, 'example'), 123);
 
-  ok('foo' in content);
-  ok('testing' in content);
-  ok(!('bar' in content));
-  ok(!('example' in content));
+  assert.ok('foo' in content);
+  assert.ok('testing' in content);
+  assert.ok(!('bar' in content));
+  assert.ok(!('example' in content));
 
-  equal(proxy.get('hasBufferedChanges'), true);
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
   proxy.discardBufferedChanges(['bar']);
 
-  equal(proxy.get('foo'), 1);
-  equal(proxy.get('testing'), '1234');
-  equal(proxy.get('bar'), undefined);
-  equal(proxy.get('example'), 123);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.equal(get(proxy, 'testing'), '1234');
+  assert.equal(get(proxy, 'bar'), undefined);
+  assert.equal(get(proxy, 'example'), 123);
 
-  ok('foo' in content);
-  ok('testing' in content);
-  ok(!('bar' in content));
-  ok(!('example' in content));
-  equal(proxy.get('hasBufferedChanges'), true);
+  assert.ok('foo' in content);
+  assert.ok('testing' in content);
+  assert.ok(!('bar' in content));
+  assert.ok(!('example' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), true);
 
   proxy.discardBufferedChanges(['example']);
 
-  equal(proxy.get('foo'), 1);
-  equal(proxy.get('testing'), '1234');
-  equal(proxy.get('bar'), undefined);
-  equal(proxy.get('example'), undefined);
+  assert.equal(get(proxy, 'foo'), 1);
+  assert.equal(get(proxy, 'testing'), '1234');
+  assert.equal(get(proxy, 'bar'), undefined);
+  assert.equal(get(proxy, 'example'), undefined);
 
-  ok('foo' in content);
-  ok('testing' in content);
-  ok(!('bar' in content));
-  ok(!('example' in content));
-  equal(proxy.get('hasBufferedChanges'), false);
+  assert.ok('foo' in content);
+  assert.ok('testing' in content);
+  assert.ok(!('bar' in content));
+  assert.ok(!('example' in content));
+  assert.equal(get(proxy, 'hasBufferedChanges'), false);
 
-  equal(proxy.get('baz'), 1);
-  equal(content.baz, 1);
+  assert.equal(get(proxy, 'baz'), 1);
+  assert.equal(get(content, 'baz'), 1);
 });
 
-test('aliased methods work', function() {
-  var BufferedProxy = Ember.ObjectProxy.extend(Mixin);
-
-  var proxy = BufferedProxy.create({
+test('aliased methods work', (assert) => {
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const proxy = BufferedProxy.create({
     content: { property: 1 }
   });
 
-  proxy.set('property', 2);
-  ok(proxy.get('hasChanges'), 'Modified proxy has changes');
+  set(proxy, 'property', 2);
+  assert.ok(get(proxy, 'hasChanges'), 'Modified proxy has changes');
 
   proxy.applyChanges();
-  equal(proxy.get('content.property'), 2, 'Applying changes sets the content\'s property');
-  ok(!(proxy.get('hasChanges')), 'Proxy has no changes after changes are applied');
+  assert.equal(get(proxy, 'content.property'), 2, 'Applying changes sets the content\'s property');
+  assert.ok(!(get(proxy, 'hasChanges')), 'Proxy has no changes after changes are applied');
 
-  proxy.set('baz', 3);
+  set(proxy, 'baz', 3);
   proxy.discardChanges();
-  equal(proxy.get('property'), 2, 'Discarding changes resets the proxy\'s property');
-  ok(!(proxy.get('hasChanges')), 'Proxy has no changes after changes are discarded');
+  assert.equal(get(proxy, 'property'), 2, 'Discarding changes resets the proxy\'s property');
+  assert.ok(!(get(proxy, 'hasChanges')), 'Proxy has no changes after changes are discarded');
 });
