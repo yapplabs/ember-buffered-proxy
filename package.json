@@ -1,6 +1,6 @@
 {
   "name": "ember-buffered-proxy",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "An Ember Object Proxy with change buffering",
   "directories": {
     "doc": "doc",
@@ -16,6 +16,12 @@
     "node": ">= 0.10.0"
   },
   "author": "Kris Selden, Stefan Penner & Yapp Labs",
+  "contributors": [
+    {
+      "name": "Ben Limmer",
+      "email": "hello@benlimmer.com"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
