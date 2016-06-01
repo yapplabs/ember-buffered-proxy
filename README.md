@@ -1,11 +1,11 @@
-# Ember-buffered-proxy [![Build Status](https://travis-ci.org/yapplabs/ember-buffered-proxy.svg)](https://travis-ci.org/yapplabs/ember-buffered-proxy)
+# ember-buffered-proxy [![Build Status](https://travis-ci.org/yapplabs/ember-buffered-proxy.svg?branch=master)](https://travis-ci.org/yapplabs/ember-buffered-proxy)
 
 An Ember Object Proxy (and mixin) the enables change buffering. Ever need to "hold back" property changes before they propogate? If so this may be the project for you.
 
 ## Usage
 
 ```sh
-npm install --save-dev ember-buffered-proxy
+ember install ember-buffered-proxy
 ```
 
 ```js
