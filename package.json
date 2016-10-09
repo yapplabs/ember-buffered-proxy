@@ -1,7 +1,7 @@
 {
   "name": "ember-buffered-proxy",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.6.0",
+  "description": "An Ember Object Proxy with change buffering",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,11 +11,17 @@
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "",
+  "repository": "https://github.com/yapplabs/ember-buffered-proxy",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Kris Selden, Stefan Penner & Yapp Labs",		 +  "author": "",
+  "contributors": [
+    {
+      "name": "Ben Limmer",
+      "email": "hello@benlimmer.com"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
@@ -46,6 +52,9 @@
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "versionCompatibility": {
+      "ember": ">=1.13"
+    }
   }
 }
