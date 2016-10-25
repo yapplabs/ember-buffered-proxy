@@ -123,5 +123,19 @@ export default Ember.Mixin.create({
     if (empty(get(this, 'buffer'))) {
       set(this, 'hasBufferedChanges', false);
     }
+  },
+
+  /*
+   * Determines if a given key has changed else returns false. Allows individual key lookups where
+   * as hasBufferedChanged only looks at the whole buffer.
+   */
+  hasChanged(key) {
+    const { buffer, content } = getProperties(this, ['buffer', 'content']);
+
+    if (typeof key === 'string' && get(buffer, key) && get(buffer, key) !== get(content, key)) {
+      return true;
+    }
+
+    return false;
   }
 });
