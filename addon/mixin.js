@@ -132,7 +132,11 @@ export default Ember.Mixin.create({
   hasChanged(key) {
     const { buffer, content } = getProperties(this, ['buffer', 'content']);
 
-    if (typeof key === 'string' && get(buffer, key) && get(buffer, key) !== get(content, key)) {
+    if (typeof key !== 'string' || typeof get(buffer, key) === 'undefined') {
+      return false;
+    }
+
+    if (get(buffer, key) !== get(content, key)) {
       return true;
     }
 

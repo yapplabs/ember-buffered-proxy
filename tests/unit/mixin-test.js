@@ -196,13 +196,17 @@ test('that .hasChanged() works', (assert) => {
 
   proxy.applyBufferedChanges(['bar']);
 
+  set(proxy, 'foobar', false);
+
   assert.equal(proxy.hasChanged('foo'), true);
   assert.equal(proxy.hasChanged('bar'), false);
+  assert.equal(proxy.hasChanged('foobar'), true);
 
   proxy.applyBufferedChanges();
 
   assert.equal(proxy.hasChanged('foo'), false);
   assert.equal(proxy.hasChanged('bar'), false);
+  assert.equal(proxy.hasChanged('foobar'), false);
 
   assert.equal(proxy.hasChanged(), false, 'Not passing a key returns false');
   assert.equal(proxy.hasChanged('baz'), false, 'If the key does not exist on the proxy then return false');
