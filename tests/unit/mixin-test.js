@@ -177,3 +177,37 @@ test('allows passing other variables at .create time', (assert) => {
   assert.equal(proxy.get('container'), fakeContainer, 'Proxy didn\'t allow defining container property at create time');
   assert.equal(proxy.get('foo'), 'foo', 'Proxy didn\'t allow setting an arbitrary value at create time');
 });
+
+test('that .hasChanged() works', (assert) => {
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const content = {};
+
+  const proxy = BufferedProxy.create({ content });
+
+  set(proxy, 'foo', 1);
+
+  assert.equal(proxy.hasChanged('foo'), true);
+  assert.equal(proxy.hasChanged('bar'), false);
+
+  set(proxy, 'bar', 1);
+
+  assert.equal(proxy.hasChanged('foo'), true);
+  assert.equal(proxy.hasChanged('bar'), true);
+
+  proxy.applyBufferedChanges(['bar']);
+
+  set(proxy, 'foobar', false);
+
+  assert.equal(proxy.hasChanged('foo'), true);
+  assert.equal(proxy.hasChanged('bar'), false);
+  assert.equal(proxy.hasChanged('foobar'), true);
+
+  proxy.applyBufferedChanges();
+
+  assert.equal(proxy.hasChanged('foo'), false);
+  assert.equal(proxy.hasChanged('bar'), false);
+  assert.equal(proxy.hasChanged('foobar'), false);
+
+  assert.equal(proxy.hasChanged(), false, 'Not passing a key returns false');
+  assert.equal(proxy.hasChanged('baz'), false, 'If the key does not exist on the proxy then return false');
+});

@@ -37,11 +37,13 @@ buffer.get('hasChanges'); // => false
 buffer.set('firstName', 'Luke');
 buffer.get('firstName'); // => 'Luke'
 buffer.get('content.firstName'); // => 'Kris'
+buffer.hasChanged('firstName'); // => true
 
 buffer.discardBufferedChanges();
 
 buffer.get('firstName'); // => 'Kris'
 buffer.get('content.firstName'); // => 'Kris'
+buffer.hasChanged('firstName'); // => false
 
 // Below demonstrates that applyBufferedChanges and discardBufferedChanges
 // can take an optional array of keys.
