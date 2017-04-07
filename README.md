@@ -103,7 +103,7 @@ var buffer = ObjectProxy.extend(BufferedMixin).create({
 ## Installation
 
 * `git clone` this repository
-* `npm install`
+* `yarn install`
 * `bower install`
 
 ## Running
