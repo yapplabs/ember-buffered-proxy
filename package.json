@@ -1,6 +1,6 @@
 {
   "name": "ember-buffered-proxy",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "An Ember Object Proxy with change buffering",
   "keywords": [
     "ember-addon"

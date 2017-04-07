@@ -1,7 +1,17 @@
 # Change Log
 
-## [0.6.0](https://github.com/yapplabs/ember-buffered-proxy/tree/0.6.0) (2016-05-31)
-[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.5.1...0.6.0)
+## [v0.7.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.7.0) (2017-04-07)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.6.0...v0.7.0)
+
+**Merged pull requests:**
+
+- Upgrade ember-cli and ember to 2.12 [\#31](https://github.com/yapplabs/ember-buffered-proxy/pull/31) ([lukemelia](https://github.com/lukemelia))
+- Fix typo in README [\#30](https://github.com/yapplabs/ember-buffered-proxy/pull/30) ([acorncom](https://github.com/acorncom))
+- Add .hasChanged\(key\) method [\#29](https://github.com/yapplabs/ember-buffered-proxy/pull/29) ([thoov](https://github.com/thoov))
+- Upgrade to ember-cli 2.8 [\#28](https://github.com/yapplabs/ember-buffered-proxy/pull/28) ([thoov](https://github.com/thoov))
+
+## [v0.6.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.6.0) (2016-06-01)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.5.1...v0.6.0)
 
 **Closed issues:**
 
@@ -10,6 +20,7 @@
 
 **Merged pull requests:**
 
+- Release 0.6.0 [\#27](https://github.com/yapplabs/ember-buffered-proxy/pull/27) ([blimmer](https://github.com/blimmer))
 - Migrate to versionCompatibility flavor ember-try. [\#26](https://github.com/yapplabs/ember-buffered-proxy/pull/26) ([blimmer](https://github.com/blimmer))
 - Allow defining additional values at create time. [\#25](https://github.com/yapplabs/ember-buffered-proxy/pull/25) ([blimmer](https://github.com/blimmer))
 - Upgrade to ember-cli 2.5 and update to ES2015 [\#24](https://github.com/yapplabs/ember-buffered-proxy/pull/24) ([thoov](https://github.com/thoov))
