@@ -24,6 +24,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
+    "bower": "^1.8.2",
     "ember-cli-babel": "^6.6.0"
   },
   "devDependencies": {
@@ -43,7 +44,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~2.15.0",
+    "ember-source": "~2.12.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
