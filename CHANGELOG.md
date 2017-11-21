@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.8.0](https://github.com/yapplabs/ember-buffered-proxy/tree/0.8.0) (2017-11-21)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.7.0...0.8.0)
+
+**Merged pull requests:**
+
+- Upgrades for cli, source, and deps to 2.15 [\#34](https://github.com/yapplabs/ember-buffered-proxy/pull/34) ([thoov](https://github.com/thoov))
+- Update "ember-cli-babel" to v6.6.0 [\#33](https://github.com/yapplabs/ember-buffered-proxy/pull/33) ([Turbo87](https://github.com/Turbo87))
+
 ## [v0.7.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.7.0) (2017-04-07)
 [Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.6.0...v0.7.0)
 
@@ -12,11 +20,6 @@
 
 ## [v0.6.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.6.0) (2016-06-01)
 [Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.5.1...v0.6.0)
-
-**Closed issues:**
-
-- Using with ember-cp-validations [\#22](https://github.com/yapplabs/ember-buffered-proxy/issues/22)
-- List of Changed Keys [\#16](https://github.com/yapplabs/ember-buffered-proxy/issues/16)
 
 **Merged pull requests:**
 
@@ -31,12 +34,6 @@
 ## [v0.5.1](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.5.1) (2015-07-06)
 [Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.2.3...v0.5.1)
 
-**Closed issues:**
-
-- The future of buffered-proxy [\#12](https://github.com/yapplabs/ember-buffered-proxy/issues/12)
-- Check if proxy has changes? [\#10](https://github.com/yapplabs/ember-buffered-proxy/issues/10)
-- what gets referenced in the proxy? [\#9](https://github.com/yapplabs/ember-buffered-proxy/issues/9)
-
 **Merged pull requests:**
 
 - Fixed deprecations with Ember 1.13.3 [\#13](https://github.com/yapplabs/ember-buffered-proxy/pull/13) ([antramm](https://github.com/antramm))
@@ -45,11 +42,6 @@
 - \[Enhancement\] Minor cleanup / refactoring [\#6](https://github.com/yapplabs/ember-buffered-proxy/pull/6) ([thoov](https://github.com/thoov))
 
 ## [v0.2.3](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.2.3) (2014-11-18)
-**Closed issues:**
-
-- Shorten method names? [\#4](https://github.com/yapplabs/ember-buffered-proxy/issues/4)
-- License? [\#1](https://github.com/yapplabs/ember-buffered-proxy/issues/1)
-
 **Merged pull requests:**
 
 - Add shorter method aliases [\#5](https://github.com/yapplabs/ember-buffered-proxy/pull/5) ([mitchlloyd](https://github.com/mitchlloyd))
