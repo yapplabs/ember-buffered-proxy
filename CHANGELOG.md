@@ -1,7 +1,14 @@
 # Change Log
 
-## [0.8.0](https://github.com/yapplabs/ember-buffered-proxy/tree/0.8.0) (2017-11-21)
-[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.7.0...0.8.0)
+## [0.8.1](https://github.com/yapplabs/ember-buffered-proxy/tree/0.8.1) (2017-11-29)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.0...0.8.1)
+
+**Merged pull requests:**
+
+- Remove unnecessary `bower` dependency [\#35](https://github.com/yapplabs/ember-buffered-proxy/pull/35) ([Turbo87](https://github.com/Turbo87))
+
+## [v0.8.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.8.0) (2017-11-21)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.7.0...v0.8.0)
 
 **Merged pull requests:**
 
