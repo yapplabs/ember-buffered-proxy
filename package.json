@@ -24,7 +24,8 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.6.0"
+    "ember-cli-babel": "^6.6.0",
+    "ember-notify-property-change-polyfill": "^0.0.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
