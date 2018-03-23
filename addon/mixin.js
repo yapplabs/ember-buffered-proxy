@@ -12,6 +12,7 @@ const {
   getProperties,
   defineProperty,
   meta,
+  notifyPropertyChange,
 } = Ember;
 
 const keys = Object.keys || Ember.keys;
@@ -71,7 +72,6 @@ export default Ember.Mixin.create({
       return;
     }
 
-    this.propertyWillChange(key);
 
     if (current === value) {
       delete buffer[key];
@@ -83,7 +83,7 @@ export default Ember.Mixin.create({
       set(this, 'hasBufferedChanges', true);
     }
 
-    this.propertyDidChange(key);
+    notifyPropertyChange(this, key);
 
     return value;
   },
@@ -116,8 +116,7 @@ export default Ember.Mixin.create({
         return;
       }
 
-      this.propertyWillChange(key);
-      this.propertyDidChange(key);
+      notifyPropertyChange(this, key);
     });
 
     if (empty(get(this, 'buffer'))) {
