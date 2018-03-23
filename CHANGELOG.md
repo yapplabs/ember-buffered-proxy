@@ -1,7 +1,14 @@
 # Change Log
 
-## [0.8.1](https://github.com/yapplabs/ember-buffered-proxy/tree/0.8.1) (2017-11-29)
-[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.0...0.8.1)
+## [1.0.0-beta.0](https://github.com/yapplabs/ember-buffered-proxy/tree/1.0.0-beta.0) (2018-03-23)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.1...1.0.0-beta.0)
+
+**Merged pull requests:**
+
+- Utilize notifyPropertyChange instead of property\(Will|Did\)Change [\#37](https://github.com/yapplabs/ember-buffered-proxy/pull/37) ([rondale-sc](https://github.com/rondale-sc))
+
+## [v0.8.1](https://github.com/yapplabs/ember-buffered-proxy/tree/v0.8.1) (2017-11-29)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.0...v0.8.1)
 
 **Merged pull requests:**
 
