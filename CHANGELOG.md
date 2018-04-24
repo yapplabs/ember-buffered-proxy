@@ -1,7 +1,14 @@
 # Change Log
 
-## [1.0.0-beta.0](https://github.com/yapplabs/ember-buffered-proxy/tree/1.0.0-beta.0) (2018-03-23)
-[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.1...1.0.0-beta.0)
+## [1.0.0](https://github.com/yapplabs/ember-buffered-proxy/tree/1.0.0) (2018-04-24)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v1.0.0-beta.0...1.0.0)
+
+**Merged pull requests:**
+
+- Tweak README and ember-try config [\#38](https://github.com/yapplabs/ember-buffered-proxy/pull/38) ([lukemelia](https://github.com/lukemelia))
+
+## [v1.0.0-beta.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v1.0.0-beta.0) (2018-03-23)
+[Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v0.8.1...v1.0.0-beta.0)
 
 **Merged pull requests:**
 
