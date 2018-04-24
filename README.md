@@ -1,6 +1,6 @@
 # ember-buffered-proxy [![Build Status](https://travis-ci.org/yapplabs/ember-buffered-proxy.svg?branch=master)](https://travis-ci.org/yapplabs/ember-buffered-proxy)
 
-An Ember Object Proxy (and mixin) the enables change buffering. Ever need to "hold back" property changes before they propagate? If so this may be the project for you.
+An Ember Object Proxy (and mixin) that enables change buffering. Ever need to "hold back" property changes before they propagate? If so, this may be the addon for you.
 
 ## Usage
 
