@@ -109,15 +109,14 @@ export default Ember.Mixin.create({
   discardBufferedChanges(onlyTheseKeys) {
     const buffer = get(this, 'buffer');
 
-    this.initializeBuffer(onlyTheseKeys);
-
     keys(buffer).forEach((key) => {
       if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
         return;
       }
-
       notifyPropertyChange(this, key);
     });
+
+    this.initializeBuffer(onlyTheseKeys);
 
     if (empty(get(this, 'buffer'))) {
       set(this, 'hasBufferedChanges', false);
