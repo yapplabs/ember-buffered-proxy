@@ -51,9 +51,9 @@ export default Ember.Mixin.create({
   setUnknownProperty(key, value) {
     const m = meta(this);
 
-    if (m.proto === this) {
-      // if marked as prototype then just defineProperty
-      // rather than delegate
+    if (m.proto === this || (m.isInitializing && m.isInitializing())) {
+      // if marked as prototype or object is initializing then just
+      // defineProperty rather than delegate
       defineProperty(this, key, null, value);
       return value;
     }
