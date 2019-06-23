@@ -1,0 +1,22 @@
+<h1>Default Home</h1>
+
+{{input value=user.firstName  placeholder="Enter First Name" }}
+{{input value=user.lastName  placeholder="Enter Last Name" }}
+
+<button {{action 'revertFirstName' 'firstName'}}>Revert first Name</button>
+<button {{action 'revertFirstName' 'lastName'}}>Revert Last Name</button>
+<button {{action 'commitChange'}}>Commit</button>
+<br/>
+<span>hasChanges: {{user.hasChanges}}</span><br/>
+<span>buffer: {{to-string user.buffer}}</span>
+
+
+<code>
+  <br/>Try changing both first name and last name, and then revert first name.
+  <br/>You'll see that the object does not refresh. Reverting the
+  <br/>attribute level change does not triggered event.
+
+</code>
+
+<br/>
+
