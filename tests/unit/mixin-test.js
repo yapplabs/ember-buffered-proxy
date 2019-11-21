@@ -9,7 +9,10 @@ import {
 module('ember-buffered-proxy/mixin', function() {
   test('that it works', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
-    const content = { baz: 1 };
+    const content = {
+      baz: 1,
+      notifyPropertyChange() {}
+    };
 
     const proxy = BufferedProxy.create({ content });
 
@@ -58,8 +61,11 @@ module('ember-buffered-proxy/mixin', function() {
 
   test('that apply/discard only these keys works', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
-    const content = { baz: 1, world: 'hello' };
-
+    const content = {
+      baz: 1,
+      world: 'hello',
+      notifyPropertyChange() {}
+    };
     const proxy = BufferedProxy.create({ content });
 
     assert.equal(get(proxy, 'baz'), 1);
@@ -146,7 +152,10 @@ module('ember-buffered-proxy/mixin', function() {
   test('aliased methods work', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const proxy = BufferedProxy.create({
-      content: { property: 1 }
+      content: {
+        property: 1,
+        notifyPropertyChange() {}
+      }
     });
 
     set(proxy, 'property', 2);
@@ -166,8 +175,11 @@ module('ember-buffered-proxy/mixin', function() {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const fakeContainer = EmberObject.create({});
 
-    var proxy = BufferedProxy.create({
-      content: { property: 1 },
+    const proxy = BufferedProxy.create({
+      content: {
+        property: 1,
+        notifyPropertyChange() {}
+      },
       container: fakeContainer,
       foo: 'foo',
     });
@@ -178,7 +190,9 @@ module('ember-buffered-proxy/mixin', function() {
 
   test('that .hasChanged() works', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
-    const content = {};
+    const content = {
+      notifyPropertyChange() {}
+    };
 
     const proxy = BufferedProxy.create({ content });
 
