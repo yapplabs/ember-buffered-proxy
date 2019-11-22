@@ -5,12 +5,12 @@ import {
   test
 } from 'qunit';
 
-module('ember-buffered-proxy/mixin');
+module('ember-buffered-proxy/proxy', function() {
+  test('exists', (assert) => {
+    assert.ok(BufferedProxy);
+  });
 
-test('exists', (assert) => {
-  assert.ok(BufferedProxy);
-});
-
-test('that appears correct', (assert) => {
-  assert.ok(BufferedMixin.detect(BufferedProxy.create()));
+  test('that appears correct', (assert) => {
+    assert.ok(BufferedMixin.detect(BufferedProxy.create()));
+  });
 });
