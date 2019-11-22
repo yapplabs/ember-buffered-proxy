@@ -1,1 +1,15 @@
-{{outlet}}
+<div id="buffer-firstname">{{buffer.firstName}}</div>
+<div id="user-firstname">{{user.firstName}}</div>
+
+<div id="buffer-email">{{buffer.email}}</div>
+<div id="user-email">{{user.email}}</div>
+
+<div id="buffer-has-changes">{{buffer.hasChanges}}</div>
+
+{{input id="firstname-input" value=buffer.firstName onChange=(action (mut buffer.firstName))}}
+{{input id="email-input" value=buffer.email onChange=(action (mut buffer.email))}}
+
+<button id="apply-changes" {{action "applyChanges"}}>Apply changes</button>
+<button id="apply-partial-changes" {{action "applyChanges" "email"}}>Apply partial changes</button>
+
+<button id="discard-changes" {{action "discardChanges"}}>Discard changes</button>
