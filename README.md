@@ -103,6 +103,7 @@ Compatibility
 
 * Ember.js v2.12 or above
 * Ember CLI v2.12 or above
+* Node.js v8 or above
 
 Contributing
 ------------------------------------------------------------------------------
