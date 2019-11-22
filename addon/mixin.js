@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-new-mixins */
 import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
 import { isArray } from '@ember/array';
