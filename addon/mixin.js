@@ -1,29 +1,19 @@
 import Ember from 'ember';
-import {
-  aliasMethod,
-  empty
-} from './helpers';
+import Mixin from '@ember/object/mixin';
+import { isArray } from '@ember/array';
+import { readOnly } from '@ember/object/computed';
+import { defineProperty, getProperties, set, get } from '@ember/object';
 
-const {
-  get,
-  set,
-  isArray,
-  computed,
-  getProperties,
-  defineProperty,
-  meta,
-  notifyPropertyChange,
-} = Ember;
+import { aliasMethod, empty } from './helpers';
 
-const keys = Object.keys || Ember.keys;
-const create = Object.create || Ember.create;
+const { notifyPropertyChange, meta } = Ember; // eslint-disable-line ember/new-module-imports
 const hasOwnProp = Object.prototype.hasOwnProperty;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   buffer: null,
   hasBufferedChanges: false,
 
-  hasChanges: computed.readOnly('hasBufferedChanges'),
+  hasChanges: readOnly('hasBufferedChanges'),
   applyChanges: aliasMethod('applyBufferedChanges'),
   discardChanges : aliasMethod('discardBufferedChanges'),
 
@@ -38,7 +28,7 @@ export default Ember.Mixin.create({
       onlyTheseKeys.forEach((key) => delete this.buffer[key]);
     }
     else {
-      set(this, 'buffer', create(null));
+      set(this, 'buffer', Object.create(null));
     }
   },
 
@@ -91,7 +81,7 @@ export default Ember.Mixin.create({
   applyBufferedChanges(onlyTheseKeys) {
     const { buffer, content } = getProperties(this, ['buffer', 'content']);
 
-    keys(buffer).forEach((key) => {
+    Object.keys(buffer).forEach((key) => {
       if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
         return;
       }
@@ -111,7 +101,7 @@ export default Ember.Mixin.create({
 
     this.initializeBuffer(onlyTheseKeys);
 
-    keys(buffer).forEach((key) => {
+    Object.keys(buffer).forEach((key) => {
       if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
         return;
       }

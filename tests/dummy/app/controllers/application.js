@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   init() {
     this._super(...arguments);
 

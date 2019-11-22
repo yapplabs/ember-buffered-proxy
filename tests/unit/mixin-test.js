@@ -1,16 +1,15 @@
-import Ember from 'ember';
+import ObjectProxy from '@ember/object/proxy';
+import EmberObject, { set, get } from '@ember/object';
 import Mixin from 'ember-buffered-proxy/mixin';
 import {
   module,
   test
 } from 'qunit';
 
-const { get, set } = Ember;
-
 module('ember-buffered-proxy/mixin');
 
 test('that it works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = { baz: 1 };
 
   const proxy = BufferedProxy.create({ content });
@@ -59,7 +58,7 @@ test('that it works', (assert) => {
 });
 
 test('that apply/discard only these keys works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = { baz: 1, world: 'hello' };
 
   const proxy = BufferedProxy.create({ content });
@@ -146,7 +145,7 @@ test('that apply/discard only these keys works', (assert) => {
 });
 
 test('aliased methods work', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const proxy = BufferedProxy.create({
     content: { property: 1 }
   });
@@ -165,8 +164,8 @@ test('aliased methods work', (assert) => {
 });
 
 test('allows passing other variables at .create time', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
-  const fakeContainer = Ember.Object.create({});
+  const BufferedProxy = ObjectProxy.extend(Mixin);
+  const fakeContainer = EmberObject.create({});
 
   var proxy = BufferedProxy.create({
     content: { property: 1 },
@@ -179,7 +178,7 @@ test('allows passing other variables at .create time', (assert) => {
 });
 
 test('that .hasChanged() works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = {};
 
   const proxy = BufferedProxy.create({ content });
