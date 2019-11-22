@@ -11,11 +11,11 @@ ember install ember-buffered-proxy
 ```js
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
-var content = {
+let content = {
   firstName: 'stefan'
 };
 
-var buffer = BufferedProxy.create({
+let buffer = BufferedProxy.create({
   content: content
 });
 
@@ -86,11 +86,11 @@ Or you can grab the mixin directly
 ```js
 import BufferedMixin from 'ember-buffered-proxy/mixin';
 
-var content = {
+let content = {
   firstName: 'stefan'
 };
 
-var buffer = ObjectProxy.extend(BufferedMixin).create({
+let buffer = ObjectProxy.extend(BufferedMixin).create({
   content: content
 });
 

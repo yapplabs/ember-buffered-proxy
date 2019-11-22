@@ -1,4 +1,4 @@
-var hasOwnProp = Object.prototype.hasOwnProperty;
+const hasOwnProp = Object.prototype.hasOwnProperty;
 
 export function aliasMethod(methodName) {
   return function() {
@@ -7,7 +7,7 @@ export function aliasMethod(methodName) {
 }
 
 export function empty(obj) {
-  var key;
+  let key;
   for (key in obj) {
     if (!hasOwnProp.call(obj, key)) { continue; }
     return false;
