@@ -23,17 +23,17 @@ export default Controller.extend({
   actions: {
     applyChanges(field) {
       if (field) {
-        this.get('buffer').applyBufferedChanges([field]);
+        this.buffer.applyBufferedChanges([field]);
       } else {
-        this.get('buffer').applyBufferedChanges();
+        this.buffer.applyBufferedChanges();
       }
     },
 
     discardChanges(field) {
       if (field) {
-        this.get('buffer').discardBufferedChanges([field]);
+        this.buffer.discardBufferedChanges([field]);
       } else {
-        this.get('buffer').discardBufferedChanges();
+        this.buffer.discardBufferedChanges();
       }
     }
   }
