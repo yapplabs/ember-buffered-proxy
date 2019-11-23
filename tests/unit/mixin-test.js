@@ -1,16 +1,19 @@
-import Ember from 'ember';
+import ObjectProxy from '@ember/object/proxy';
+import EmberObject from '@ember/object';
 import Mixin from 'ember-buffered-proxy/mixin';
 import {
   module,
   test
 } from 'qunit';
+import { getProperties } from '@ember/object';
+import { get, set } from '@ember/object';
 
-const { get, set } = Ember;
+const keysOf = Object.keys;
 
 module('ember-buffered-proxy/mixin');
 
 test('that it works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = { baz: 1 };
 
   const proxy = BufferedProxy.create({ content });
@@ -48,18 +51,18 @@ test('that it works', (assert) => {
 
   assert.equal(get(proxy, 'foo'), 1);
   assert.equal(get(proxy, 'bar'), undefined);
-
+  
   assert.ok('foo' in content);
   assert.ok(!('bar' in content));
 
-  assert.equal(get(proxy, 'hasBufferedChanges'), false);
+  assert.equal(get(proxy, 'hasBufferedChanges'), false, "asdf");
 
   assert.equal(get(proxy, 'baz'), 1);
   assert.equal(get(content, 'baz'), 1);
 });
 
 test('that apply/discard only these keys works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = { baz: 1, world: 'hello' };
 
   const proxy = BufferedProxy.create({ content });
@@ -117,16 +120,21 @@ test('that apply/discard only these keys works', (assert) => {
 
   proxy.discardBufferedChanges(['bar']);
 
-  assert.equal(get(proxy, 'foo'), 1);
-  assert.equal(get(proxy, 'testing'), '1234');
-  assert.equal(get(proxy, 'bar'), undefined);
-  assert.equal(get(proxy, 'example'), 123);
+  var results = {
+    foo:1, 
+    testing: '1234',
+    bar: undefined, 
+    example: 123
+  };
+
+  assert.deepEqual(results, getProperties(proxy, keysOf(results)), 'proxy looks good' )
 
   assert.ok('foo' in content);
   assert.ok('testing' in content);
   assert.ok(!('bar' in content));
   assert.ok(!('example' in content));
-  assert.equal(get(proxy, 'hasBufferedChanges'), true);
+
+  assert.equal(get(proxy, 'hasBufferedChanges'), true, "buffered changes true");
 
   proxy.discardBufferedChanges(['example']);
 
@@ -146,7 +154,7 @@ test('that apply/discard only these keys works', (assert) => {
 });
 
 test('aliased methods work', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const proxy = BufferedProxy.create({
     content: { property: 1 }
   });
@@ -165,21 +173,16 @@ test('aliased methods work', (assert) => {
 });
 
 test('allows passing other variables at .create time', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
-  const fakeContainer = Ember.Object.create({});
-
-  var proxy = BufferedProxy.create({
-    content: { property: 1 },
-    container: fakeContainer,
-    foo: 'foo',
-  });
-
-  assert.equal(proxy.get('container'), fakeContainer, 'Proxy didn\'t allow defining container property at create time');
+  const BufferedProxy = ObjectProxy.extend(Mixin);
+  const container = EmberObject.create({});
+  
+  const proxy = BufferedProxy.create({container, content:{prop:1}, foo:"foo"});
+  assert.equal(proxy.get('container'), container, 'Proxy didn\'t allow defining container property at create time');
   assert.equal(proxy.get('foo'), 'foo', 'Proxy didn\'t allow setting an arbitrary value at create time');
 });
 
 test('that .hasChanged() works', (assert) => {
-  const BufferedProxy = Ember.ObjectProxy.extend(Mixin);
+  const BufferedProxy = ObjectProxy.extend(Mixin);
   const content = {};
 
   const proxy = BufferedProxy.create({ content });

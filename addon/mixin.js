@@ -1,144 +1,147 @@
+/**
+@module ember
+*/
+
 import Ember from 'ember';
-import {
-  aliasMethod,
-  empty
-} from './helpers';
+import Mixin from '@ember/object/mixin';
 
-const {
-  get,
-  set,
-  isArray,
-  computed,
-  getProperties,
-  defineProperty,
-  meta,
-  notifyPropertyChange,
-} = Ember;
+import { aliasMethod, empty } from './helpers';
+const { meta } = Ember;
 
-const keys = Object.keys || Ember.keys;
-const create = Object.create || Ember.create;
+import { isArray } from '@ember/array';
+import { readOnly } from '@ember/object/computed';
+import { keys as keysFill, create as createFill } from '@ember/polyfills';
+import { get, set, getProperties, setProperties, defineProperty, notifyPropertyChange } from '@ember/object';
+
+const keys = Object.keys || keysFill;
+const create = Object.create || createFill;
 const hasOwnProp = Object.prototype.hasOwnProperty;
 
-export default Ember.Mixin.create({
-  buffer: null,
-  hasBufferedChanges: false,
 
-  hasChanges: computed.readOnly('hasBufferedChanges'),
-  applyChanges: aliasMethod('applyBufferedChanges'),
-  discardChanges : aliasMethod('discardBufferedChanges'),
+const contentFor = (proxy) => {
+  return get(proxy, 'content');
+}
 
-  init() {
-    this.initializeBuffer();
-    set(this, 'hasBufferedChanges', false);
-    this._super(...arguments);
-  },
+export default Mixin.create({
 
-  initializeBuffer(onlyTheseKeys) {
-    if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
-      onlyTheseKeys.forEach((key) => delete this.buffer[key]);
-    }
-    else {
-      set(this, 'buffer', create(null));
-    }
-  },
+buffer: null,
+hasBufferedChanges: false,
 
-  unknownProperty(key) {
-    const buffer = get(this, 'buffer');
+hasChanges: readOnly('hasBufferedChanges'),
+applyChanges: aliasMethod('applyBufferedChanges'),
+discardChanges : aliasMethod('discardBufferedChanges'),
 
-    return (hasOwnProp.call(buffer, key)) ? buffer[key] : this._super(key);
-  },
+init() {
+  this.initializeBuffer(this);
+  this._super(...arguments);
+},
 
-  setUnknownProperty(key, value) {
-    const m = meta(this);
+initializeBuffer(context, onlyTheseKeys) {
+  var buffer;
 
-    if (m.proto === this || (m.isInitializing && m.isInitializing())) {
+  if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
+    buffer = get(context, 'buffer');
+    onlyTheseKeys.forEach((key) => delete buffer[key]);
+  }
+  else {
+    buffer = create(null);
+    setProperties(context, { buffer, hasBufferedChanges: false })
+  }
+  return buffer;
+},
+
+unknownProperty(key) {
+  const buffer = get(this, 'buffer');
+  if(hasOwnProp.call(buffer, key)){
+      return get(buffer, key)
+  }
+  return this._super(key);
+},
+
+setUnknownProperty(key, value) {
+  let m = meta(this);
+  const buffer = this.buffer || {},
+  content = contentFor(this, m),
+  current = content && get(content, key),
+  isBufferProp = hasOwnProp.call(buffer, key),
+  previous = isBufferProp ? buffer[key] : current;
+  
+  if (m.isInitializing() || m.isPrototypeMeta(this)) {
       // if marked as prototype or object is initializing then just
       // defineProperty rather than delegate
       defineProperty(this, key, null, value);
       return value;
-    }
+  }
 
-    const { buffer, content } = getProperties(this, ['buffer', 'content']);
-    let current;
-    let previous;
-
-    if (content != null) {
-      current = get(content, key);
-    }
-
-    previous = hasOwnProp.call(buffer, key) ? buffer[key] : current;
-
-    if (previous === value) {
+  if (previous === value) {
       return;
-    }
+  }
 
-
-    if (current === value) {
+  if (current === value) {
       delete buffer[key];
       if (empty(buffer)) {
         set(this, 'hasBufferedChanges', false);
       }
     } else {
-      buffer[key] = value;
+      set(buffer, key, value)
       set(this, 'hasBufferedChanges', true);
-    }
+  }
 
-    notifyPropertyChange(this, key);
-
-    return value;
-  },
-
-  applyBufferedChanges(onlyTheseKeys) {
-    const { buffer, content } = getProperties(this, ['buffer', 'content']);
-
-    keys(buffer).forEach((key) => {
-      if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
-        return;
-      }
-
-      set(content, key, buffer[key]);
-    });
-
-    this.initializeBuffer(onlyTheseKeys);
-
-    if (empty(get(this, 'buffer'))) {
-      set(this, 'hasBufferedChanges', false);
-    }
-  },
-
-  discardBufferedChanges(onlyTheseKeys) {
-    const buffer = get(this, 'buffer');
-
-    this.initializeBuffer(onlyTheseKeys);
-
-    keys(buffer).forEach((key) => {
-      if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
-        return;
-      }
-
+  if(isBufferProp){
       notifyPropertyChange(this, key);
-    });
+  }else{
+      notifyPropertyChange(content, key);
+  }
+  return value;
+},
 
-    if (empty(get(this, 'buffer'))) {
-      set(this, 'hasBufferedChanges', false);
+applyBufferedChanges(onlyTheseKeys) {
+  const m = meta(this),
+  content = contentFor(this, m);
+  var buffer  = this.buffer,
+  keysToSet = onlyTheseKeys || keys(buffer);
+  
+  setProperties(content, getProperties(this, ...keysToSet));
+  
+  buffer = this.initializeBuffer(this, onlyTheseKeys);
+
+  if (empty(buffer)) {
+    set(this, 'hasBufferedChanges', false);
+  }
+},
+
+discardBufferedChanges(onlyTheseKeys) {
+  var buffer = get(this, 'buffer'),
+      changedKeys = keys(buffer);
+      buffer = this.initializeBuffer(this, onlyTheseKeys);
+
+  changedKeys.forEach((key) => {
+    if (isArray(onlyTheseKeys) && onlyTheseKeys.indexOf(key) === -1) {
+      return;
     }
-  },
+    notifyPropertyChange(this, key);
+  });
 
-  /*
-   * Determines if a given key has changed else returns false. Allows individual key lookups where
-   * as hasBufferedChanged only looks at the whole buffer.
-   */
-  hasChanged(key) {
-    const { buffer, content } = getProperties(this, ['buffer', 'content']);
+  if (empty(buffer)) {
+    set(this, 'hasBufferedChanges', false);
+  }
+},
 
-    if (typeof key !== 'string' || typeof get(buffer, key) === 'undefined') {
-      return false;
-    }
+/*
+ * Determines if a given key has changed else returns false. Allows individual key lookups where
+ * as hasBufferedChanged only looks at the whole buffer.
+ */
+hasChanged(key) {
+  const { buffer, content } = getProperties(this, ['buffer', 'content']);
 
-    if (get(buffer, key) !== get(content, key)) {
-      return true;
-    }
-
+  if (typeof key !== 'string' || typeof get(buffer, key) === 'undefined') {
     return false;
   }
+
+  if (get(buffer, key) !== get(content, key)) {
+    return true;
+  }
+
+  return false;
+}
 });
