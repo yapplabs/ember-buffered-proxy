@@ -11,11 +11,11 @@ ember install ember-buffered-proxy
 ```js
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
-var content = {
+let content = {
   firstName: 'stefan'
 };
 
-var buffer = BufferedProxy.create({
+let buffer = BufferedProxy.create({
   content: content
 });
 
@@ -86,11 +86,11 @@ Or you can grab the mixin directly
 ```js
 import BufferedMixin from 'ember-buffered-proxy/mixin';
 
-var content = {
+let content = {
   firstName: 'stefan'
 };
 
-var buffer = ObjectProxy.extend(BufferedMixin).create({
+let buffer = ObjectProxy.extend(BufferedMixin).create({
   content: content
 });
 
@@ -98,26 +98,19 @@ var buffer = ObjectProxy.extend(BufferedMixin).create({
 ```
 
 
-## development
+Compatibility
+------------------------------------------------------------------------------
 
-## Installation
+* Ember.js v3.8 or above
+* Ember CLI v3.8 or above
+* Node.js v8 or above
 
-* `git clone` this repository
-* `yarn install`
-* `bower install`
+Contributing
+------------------------------------------------------------------------------
 
-## Running
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+License
+------------------------------------------------------------------------------
 
-## Running Tests
-
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+This project is licensed under the [MIT License](LICENSE.md).

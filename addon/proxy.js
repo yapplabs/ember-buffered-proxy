@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import ObjectProxy from '@ember/object/proxy';
 import BufferedProxyMixin from './mixin';
 
-export default Ember.ObjectProxy.extend(BufferedProxyMixin);
+export default ObjectProxy.extend(BufferedProxyMixin);
