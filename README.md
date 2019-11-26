@@ -101,9 +101,11 @@ let buffer = ObjectProxy.extend(BufferedMixin).create({
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.8 or above
-* Ember CLI v3.8 or above
-* Node.js v8 or above
+| Version | Minimal Ember version required |
+| --- | --- |
+| > 1.0.1 | 3.8 |
+| 0.8.0 - 1.0.1 | 2.15 |
+| < 0.8 | 2.5 |
 
 Contributing
 ------------------------------------------------------------------------------
