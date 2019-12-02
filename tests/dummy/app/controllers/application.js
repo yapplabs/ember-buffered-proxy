@@ -1,7 +1,13 @@
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
 export default Controller.extend({
+
+  computedOnBuffer: computed('buffer.firstName', function() {
+    return this.get('buffer.firstName').split('').reverse().join('');
+  }),
+
   init() {
     this._super(...arguments);
 

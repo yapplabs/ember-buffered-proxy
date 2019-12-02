@@ -4,6 +4,8 @@
 <div id="buffer-email">{{buffer.email}}</div>
 <div id="user-email">{{user.email}}</div>
 
+<div id="buffer-firstname-backward">{{computedOnBuffer}}</div>
+
 <div id="buffer-has-changes">{{buffer.hasChanges}}</div>
 
 {{input id="firstname-input" value=buffer.firstName onChange=(action (mut buffer.firstName))}}
