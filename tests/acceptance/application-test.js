@@ -73,4 +73,30 @@ module('Acceptance | application', function(hooks) {
     assert.dom('#user-email').hasText('test@dot.com');
     assert.dom('#buffer-has-changes').hasText('false');
   });
+
+  test('verify if buffer is notified about discarding changes', async function(assert) {
+    await visit('/');
+
+    assert.equal(currentURL(), '/');
+
+    // Init: Buffer's and content's property value are the same
+    assert.dom('#buffer-firstname').hasText('stefan');
+    assert.dom('#buffer-firstname-backward').hasText('nafets');
+    assert.dom('#user-firstname').hasText('stefan');
+    assert.dom('#buffer-has-changes').hasText('false');
+
+    // Change buffer value: there should be a difference between buffer and content
+    await fillIn('#firstname-input', 'tomek');
+    assert.dom('#buffer-firstname').hasText('tomek');
+    assert.dom('#buffer-firstname-backward').hasText('kemot');
+    assert.dom('#user-firstname').hasText('stefan');
+    assert.dom('#buffer-has-changes').hasText('true');
+
+    // Discard buffer changes and verify
+    await click('button#discard-changes');
+    assert.dom('#buffer-firstname').hasText('stefan');
+    assert.dom('#buffer-firstname-backward').hasText('nafets');
+    assert.dom('#user-firstname').hasText('stefan');
+    assert.dom('#buffer-has-changes').hasText('false');
+  });
 });

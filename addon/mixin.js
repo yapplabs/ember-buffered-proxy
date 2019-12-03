@@ -98,7 +98,7 @@ export default Mixin.create({
   },
 
   discardBufferedChanges(onlyTheseKeys) {
-    const buffer = get(this, 'buffer');
+    const { buffer, content } = getProperties(this, ['buffer', 'content']);
 
     this.initializeBuffer(onlyTheseKeys);
 
@@ -107,7 +107,7 @@ export default Mixin.create({
         return;
       }
 
-      notifyPropertyChange(this, key);
+      notifyPropertyChange(content, key);
     });
 
     if (empty(get(this, 'buffer'))) {
