@@ -224,3 +224,24 @@ module('ember-buffered-proxy/mixin', function() {
     assert.equal(proxy.hasChanged('baz'), false, 'If the key does not exist on the proxy then return false');
   });
 });
+
+test('that a custom isEqual works', (assert) => {
+  const BufferedProxy = Ember.ObjectProxy.extend(Mixin, {
+    isEqual(a, b, key) {
+      if (key === 'fooArray') {
+        return a.every(item => b.indexOf(item) > -1);
+      } else {
+        return this._super(...arguments);
+      }
+    }
+  });
+
+  const content = { fooArray: [1, 2, 3], barArray: [1, 2, 3] };
+  const proxy = BufferedProxy.create({ content });
+
+  set(proxy, 'fooArray', [1, 2, 3]);
+  set(proxy, 'barArray', [1, 2, 3]);
+
+  assert.equal(proxy.hasChanged('fooArray'), false, 'custom equality checker works with arrays');
+  assert.equal(proxy.hasChanged('barArray'), true, 'default equality check does not work with arrays');
+});
