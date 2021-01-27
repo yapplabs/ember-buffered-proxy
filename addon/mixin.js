@@ -5,10 +5,21 @@ import { isArray } from '@ember/array';
 import { readOnly } from '@ember/object/computed';
 import { defineProperty, getProperties, set, get } from '@ember/object';
 
+import { gte, lte } from 'ember-compatibility-helpers';
+
 import { aliasMethod, empty } from './helpers';
 
 const { notifyPropertyChange, meta } = Ember; // eslint-disable-line ember/new-module-imports
 const hasOwnProp = Object.prototype.hasOwnProperty;
+
+function monkeyPatchedNotifyPropertyChange(context, key) {
+  if (gte('3.13.0') && lte('3.19.0')) {
+    let content = get(context, 'content');
+    notifyPropertyChange(content, key);
+  } else {
+    notifyPropertyChange(context, key);
+  }
+}
 
 export default Mixin.create({
   buffer: null,
@@ -74,7 +85,8 @@ export default Mixin.create({
       set(this, 'hasBufferedChanges', true);
     }
 
-    notifyPropertyChange(content, key);
+    
+    monkeyPatchedNotifyPropertyChange(this, key);
 
     return value;
   },
@@ -98,7 +110,7 @@ export default Mixin.create({
   },
 
   discardBufferedChanges(onlyTheseKeys) {
-    const { buffer, content } = getProperties(this, ['buffer', 'content']);
+    const buffer = get(this, 'buffer');
 
     this.initializeBuffer(onlyTheseKeys);
 
@@ -107,7 +119,7 @@ export default Mixin.create({
         return;
       }
 
-      notifyPropertyChange(content, key);
+      monkeyPatchedNotifyPropertyChange(this, key);
     });
 
     if (empty(get(this, 'buffer'))) {
