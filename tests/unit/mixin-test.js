@@ -1,17 +1,15 @@
+/* eslint-disable ember/no-get */
 import ObjectProxy from '@ember/object/proxy';
 import EmberObject, { set, get } from '@ember/object';
 import Mixin from 'ember-buffered-proxy/mixin';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 
-module('ember-buffered-proxy/mixin', function() {
+module('ember-buffered-proxy/mixin', function () {
   test('that it works', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const content = {
       baz: 1,
-      notifyPropertyChange() {}
+      notifyPropertyChange() {},
     };
 
     const proxy = BufferedProxy.create({ content });
@@ -64,7 +62,7 @@ module('ember-buffered-proxy/mixin', function() {
     const content = {
       baz: 1,
       world: 'hello',
-      notifyPropertyChange() {}
+      notifyPropertyChange() {},
     };
     const proxy = BufferedProxy.create({ content });
 
@@ -154,21 +152,35 @@ module('ember-buffered-proxy/mixin', function() {
     const proxy = BufferedProxy.create({
       content: {
         property: 1,
-        notifyPropertyChange() {}
-      }
+        notifyPropertyChange() {},
+      },
     });
 
     set(proxy, 'property', 2);
     assert.ok(get(proxy, 'hasChanges'), 'Modified proxy has changes');
 
     proxy.applyChanges();
-    assert.equal(get(proxy, 'content.property'), 2, 'Applying changes sets the content\'s property');
-    assert.ok(!(get(proxy, 'hasChanges')), 'Proxy has no changes after changes are applied');
+    assert.equal(
+      get(proxy, 'content.property'),
+      2,
+      "Applying changes sets the content's property"
+    );
+    assert.ok(
+      !get(proxy, 'hasChanges'),
+      'Proxy has no changes after changes are applied'
+    );
 
     set(proxy, 'baz', 3);
     proxy.discardChanges();
-    assert.equal(get(proxy, 'property'), 2, 'Discarding changes resets the proxy\'s property');
-    assert.ok(!(get(proxy, 'hasChanges')), 'Proxy has no changes after changes are discarded');
+    assert.equal(
+      get(proxy, 'property'),
+      2,
+      "Discarding changes resets the proxy's property"
+    );
+    assert.ok(
+      !get(proxy, 'hasChanges'),
+      'Proxy has no changes after changes are discarded'
+    );
   });
 
   test('allows passing other variables at .create time', (assert) => {
@@ -178,20 +190,28 @@ module('ember-buffered-proxy/mixin', function() {
     const proxy = BufferedProxy.create({
       content: {
         property: 1,
-        notifyPropertyChange() {}
+        notifyPropertyChange() {},
       },
       container: fakeContainer,
       foo: 'foo',
     });
 
-    assert.equal(proxy.get('container'), fakeContainer, 'Proxy didn\'t allow defining container property at create time');
-    assert.equal(proxy.get('foo'), 'foo', 'Proxy didn\'t allow setting an arbitrary value at create time');
+    assert.equal(
+      proxy.get('container'),
+      fakeContainer,
+      "Proxy didn't allow defining container property at create time"
+    );
+    assert.equal(
+      proxy.get('foo'),
+      'foo',
+      "Proxy didn't allow setting an arbitrary value at create time"
+    );
   });
 
   test('that .hasChanged() works', (assert) => {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const content = {
-      notifyPropertyChange() {}
+      notifyPropertyChange() {},
     };
 
     const proxy = BufferedProxy.create({ content });
@@ -221,6 +241,10 @@ module('ember-buffered-proxy/mixin', function() {
     assert.equal(proxy.hasChanged('foobar'), false);
 
     assert.equal(proxy.hasChanged(), false, 'Not passing a key returns false');
-    assert.equal(proxy.hasChanged('baz'), false, 'If the key does not exist on the proxy then return false');
+    assert.equal(
+      proxy.hasChanged('baz'),
+      false,
+      'If the key does not exist on the proxy then return false'
+    );
   });
 });

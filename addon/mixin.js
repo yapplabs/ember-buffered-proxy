@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-get */
 /* eslint-disable ember/no-new-mixins */
 import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
@@ -16,7 +17,7 @@ export default Mixin.create({
 
   hasChanges: readOnly('hasBufferedChanges'),
   applyChanges: aliasMethod('applyBufferedChanges'),
-  discardChanges : aliasMethod('discardBufferedChanges'),
+  discardChanges: aliasMethod('discardBufferedChanges'),
 
   init() {
     this.initializeBuffer();
@@ -25,10 +26,9 @@ export default Mixin.create({
   },
 
   initializeBuffer(onlyTheseKeys) {
-    if(isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
+    if (isArray(onlyTheseKeys) && !empty(onlyTheseKeys)) {
       onlyTheseKeys.forEach((key) => delete this.buffer[key]);
-    }
-    else {
+    } else {
       set(this, 'buffer', Object.create(null));
     }
   },
@@ -36,7 +36,7 @@ export default Mixin.create({
   unknownProperty(key) {
     const buffer = get(this, 'buffer');
 
-    return (hasOwnProp.call(buffer, key)) ? buffer[key] : this._super(key);
+    return hasOwnProp.call(buffer, key) ? buffer[key] : this._super(key);
   },
 
   setUnknownProperty(key, value) {
@@ -62,7 +62,6 @@ export default Mixin.create({
     if (previous === value) {
       return;
     }
-
 
     if (current === value) {
       delete buffer[key];
@@ -131,5 +130,5 @@ export default Mixin.create({
     }
 
     return false;
-  }
+  },
 });
