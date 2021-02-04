@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { click, fillIn, currentURL, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
-module('Acceptance | application', function(hooks) {
+module('Acceptance | application', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('verify if changes on whole content object were applied', async function(assert) {
+  test('verify if changes on whole content object were applied', async function (assert) {
     await visit('/');
 
     assert.equal(currentURL(), '/');
@@ -35,7 +35,7 @@ module('Acceptance | application', function(hooks) {
     assert.dom('#buffer-has-changes').hasText('false');
   });
 
-  test('verify if partial changes were applied', async function(assert) {
+  test('verify if partial changes were applied', async function (assert) {
     await visit('/');
 
     assert.equal(currentURL(), '/');
@@ -62,7 +62,9 @@ module('Acceptance | application', function(hooks) {
     assert.dom('#user-firstname').hasText('stefan');
     assert.dom('#buffer-email').hasText('test@dot.com');
     assert.dom('#user-email').hasText('test@dot.com');
-    assert.dom('#buffer-has-changes').hasText('true', 'still has changes to apply');
+    assert
+      .dom('#buffer-has-changes')
+      .hasText('true', 'still has changes to apply');
 
     // Discard changes - we expect firstname to be back to original value
     // But the change that was already applied, should remain
@@ -74,7 +76,7 @@ module('Acceptance | application', function(hooks) {
     assert.dom('#buffer-has-changes').hasText('false');
   });
 
-  test('verify if buffer is notified about discarding changes', async function(assert) {
+  test('verify if buffer is notified about discarding changes', async function (assert) {
     await visit('/');
 
     assert.equal(currentURL(), '/');

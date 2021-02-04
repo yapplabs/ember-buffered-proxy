@@ -1,19 +1,38 @@
 {{page-title "Dummy"}}
 
-<div id="buffer-firstname">{{buffer.firstName}}</div>
-<div id="user-firstname">{{user.firstName}}</div>
+<div id="buffer-firstname">{{this.buffer.firstName}}</div>
+<div id="user-firstname">{{this.user.firstName}}</div>
 
-<div id="buffer-email">{{buffer.email}}</div>
-<div id="user-email">{{user.email}}</div>
+<div id="buffer-email">{{this.buffer.email}}</div>
+<div id="user-email">{{this.user.email}}</div>
 
-<div id="buffer-firstname-backward">{{computedOnBuffer}}</div>
+<div id="buffer-firstname-backward">{{this.computedOnBuffer}}</div>
 
-<div id="buffer-has-changes">{{buffer.hasChanges}}</div>
+<div id="buffer-has-changes">{{this.buffer.hasChanges}}</div>
 
-{{input id="firstname-input" value=buffer.firstName onChange=(action (mut buffer.firstName))}}
-{{input id="email-input" value=buffer.email onChange=(action (mut buffer.email))}}
+<Input id="firstname-input" @value={{this.buffer.firstName}} @onChange={{fn (mut this.buffer.firstName)}} />
+<Input id="email-input" @value={{this.buffer.email}} @onChange={{fn (mut this.buffer.email)}} />
 
-<button id="apply-changes" {{action "applyChanges"}}>Apply changes</button>
-<button id="apply-partial-changes" {{action "applyChanges" "email"}}>Apply partial changes</button>
+<button
+  type="button"
+  id="apply-changes"
+  {{on 'click' this.applyChanges}}
+>
+  Apply changes
+</button>
 
-<button id="discard-changes" {{action "discardChanges"}}>Discard changes</button>
+<button
+  type="button"
+  id="apply-partial-changes"
+  {{on 'click' (fn this.applyChanges "email")}}
+>
+  Apply partial changes
+</button>
+
+<button
+  type="button"
+  id="discard-changes"
+  {{on 'click' this.discardChanges}}
+>
+  Discard changes
+</button>
