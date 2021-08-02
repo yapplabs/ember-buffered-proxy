@@ -36,7 +36,7 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.23.0",
+    "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^5.3.1",
     "ember-notify-property-change-polyfill": "^0.0.1"
   },
