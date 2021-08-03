@@ -1,5 +1,19 @@
 # Changelog
 
+
+## v2.0.0 (2021-08-03)
+
+#### :boom: Breaking Change
+* [#78](https://github.com/yapplabs/ember-buffered-proxy/pull/78) Update ember-cli-babel and set node to minimum of version 12. ([@lukemelia](https://github.com/lukemelia))
+
+#### :house: Internal
+* [#78](https://github.com/yapplabs/ember-buffered-proxy/pull/78) Update ember-cli-babel and set node to minimum of version 12. ([@lukemelia](https://github.com/lukemelia))
+* [#69](https://github.com/yapplabs/ember-buffered-proxy/pull/69) Update ember version and CI setup ([@lukemelia](https://github.com/lukemelia))
+
+#### Committers: 2
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+- Tomek Nieżurawski ([@tniezurawski](https://github.com/tniezurawski))
+
 ## [v2.0.0-beta.0](https://github.com/yapplabs/ember-buffered-proxy/tree/v1.0.1) (2020-01-10)
 
 [Full Changelog](https://github.com/yapplabs/ember-buffered-proxy/compare/v1.0.1...2.0.0-beta.0)
