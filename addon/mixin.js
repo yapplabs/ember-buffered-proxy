@@ -4,7 +4,13 @@ import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
 import { isArray } from '@ember/array';
 import { readOnly } from '@ember/object/computed';
-import { defineProperty, notifyPropertyChange, getProperties, set, get } from '@ember/object';
+import {
+  defineProperty,
+  notifyPropertyChange,
+  getProperties,
+  set,
+  get,
+} from '@ember/object';
 
 import { aliasMethod, empty } from './helpers';
 
