@@ -4,11 +4,11 @@ import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
 import { isArray } from '@ember/array';
 import { readOnly } from '@ember/object/computed';
-import { defineProperty, getProperties, set, get } from '@ember/object';
+import { defineProperty, notifyPropertyChange, getProperties, set, get } from '@ember/object';
 
 import { aliasMethod, empty } from './helpers';
 
-const { notifyPropertyChange, meta } = Ember; // eslint-disable-line ember/new-module-imports
+const { meta } = Ember; // eslint-disable-line ember/new-module-imports
 const hasOwnProp = Object.prototype.hasOwnProperty;
 
 export default Mixin.create({
