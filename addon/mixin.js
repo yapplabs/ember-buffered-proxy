@@ -1,5 +1,6 @@
 /* eslint-disable ember/no-get */
 /* eslint-disable ember/no-new-mixins */
+import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
 import { isArray } from '@ember/array';
 import { readOnly } from '@ember/object/computed';
@@ -15,7 +16,7 @@ import { gte, lte } from 'ember-compatibility-helpers';
 
 import { aliasMethod, empty } from './helpers';
 
-import { meta as metaFor } from '@ember/-internals/meta';
+const { meta } = Ember; // eslint-disable-line ember/new-module-imports
 const hasOwnProp = Object.prototype.hasOwnProperty;
 
 function monkeyPatchedNotifyPropertyChange(context, key) {
@@ -56,7 +57,7 @@ export default Mixin.create({
   },
 
   setUnknownProperty(key, value) {
-    const m = metaFor(this);
+    const m = meta(this);
 
     if (m.proto === this || (m.isInitializing && m.isInitializing())) {
       // if marked as prototype or object is initializing then just
