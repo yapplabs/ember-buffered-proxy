@@ -79,8 +79,8 @@
     "prettier": "^2.5.1",
     "qunit": "^2.17.2",
     "qunit-dom": "^1.6.0",
-    "release-it": "^14.2.1",
-    "release-it-lerna-changelog": "^3.1.0"
+    "release-it": "^14.12.5",
+    "release-it-lerna-changelog": "^4.0.1"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
@@ -98,7 +98,7 @@
     "plugins": {
       "release-it-lerna-changelog": {
         "infile": "CHANGELOG.md",
-        "launchEditor": false
+        "launchEditor": true
       }
     },
     "git": {
