@@ -1,5 +1,3 @@
-/* eslint-disable ember/no-classic-classes */
-/* eslint-disable ember/no-get */
 import Controller from '@ember/controller';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 import { action } from '@ember/object';

@@ -5,7 +5,7 @@ import Mixin from 'ember-buffered-proxy/mixin';
 import { module, test } from 'qunit';
 
 module('ember-buffered-proxy/mixin', function () {
-  test('that it works', (assert) => {
+  test('that it works', function (assert) {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const content = {
       baz: 1,
@@ -17,20 +17,20 @@ module('ember-buffered-proxy/mixin', function () {
     assert.equal(get(proxy, 'baz'), 1);
     assert.equal(get(content, 'baz'), 1);
 
-    assert.ok(!('foo' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.notOk('foo' in content);
+    assert.false(get(proxy, 'hasBufferedChanges'));
 
     set(proxy, 'foo', 1);
 
     assert.equal(get(proxy, 'foo'), 1);
-    assert.ok(!('foo' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.notOk('foo' in content);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     proxy.applyBufferedChanges();
 
     assert.equal(get(proxy, 'foo'), 1);
     assert.ok('foo' in content);
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.false(get(proxy, 'hasBufferedChanges'));
     assert.equal(get(content, 'foo'), 1);
 
     set(proxy, 'bar', 1);
@@ -39,9 +39,9 @@ module('ember-buffered-proxy/mixin', function () {
     assert.equal(get(proxy, 'bar'), 1);
 
     assert.ok('foo' in content);
-    assert.ok(!('bar' in content));
+    assert.notOk('bar' in content);
 
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     proxy.discardBufferedChanges();
 
@@ -49,15 +49,15 @@ module('ember-buffered-proxy/mixin', function () {
     assert.equal(get(proxy, 'bar'), undefined);
 
     assert.ok('foo' in content);
-    assert.ok(!('bar' in content));
+    assert.notOk('bar' in content);
 
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.false(get(proxy, 'hasBufferedChanges'));
 
     assert.equal(get(proxy, 'baz'), 1);
     assert.equal(get(content, 'baz'), 1);
   });
 
-  test('that apply/discard only these keys works', (assert) => {
+  test('that apply/discard only these keys works', function (assert) {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const content = {
       baz: 1,
@@ -71,27 +71,27 @@ module('ember-buffered-proxy/mixin', function () {
     assert.equal(get(proxy, 'world'), 'hello');
     assert.equal(get(content, 'world'), 'hello');
 
-    assert.ok(!('foo' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.notOk('foo' in content);
+    assert.false(get(proxy, 'hasBufferedChanges'));
 
     set(proxy, 'foo', 1);
 
     assert.equal(get(proxy, 'foo'), 1);
-    assert.ok(!('foo' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.notOk('foo' in content);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     set(proxy, 'testing', '1234');
 
     assert.equal(get(proxy, 'testing'), '1234');
-    assert.ok(!('testing' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.notOk('testing' in content);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     proxy.applyBufferedChanges(['foo']);
 
     assert.equal(get(proxy, 'foo'), 1);
     assert.ok('foo' in content);
-    assert.ok(!('testing' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.notOk('testing' in content);
+    assert.true(get(proxy, 'hasBufferedChanges'));
     assert.equal(get(content, 'foo'), 1);
     assert.equal(get(proxy, 'testing'), '1234');
 
@@ -99,7 +99,7 @@ module('ember-buffered-proxy/mixin', function () {
 
     assert.equal(get(proxy, 'testing'), '1234');
     assert.ok('testing' in content);
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.false(get(proxy, 'hasBufferedChanges'));
     assert.equal(get(content, 'testing'), '1234');
 
     // Testing discardBufferdChanges with onlyTheseKeys
@@ -112,10 +112,10 @@ module('ember-buffered-proxy/mixin', function () {
 
     assert.ok('foo' in content);
     assert.ok('testing' in content);
-    assert.ok(!('bar' in content));
-    assert.ok(!('example' in content));
+    assert.notOk('bar' in content);
+    assert.notOk('example' in content);
 
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     proxy.discardBufferedChanges(['bar']);
 
@@ -126,9 +126,9 @@ module('ember-buffered-proxy/mixin', function () {
 
     assert.ok('foo' in content);
     assert.ok('testing' in content);
-    assert.ok(!('bar' in content));
-    assert.ok(!('example' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), true);
+    assert.notOk('bar' in content);
+    assert.notOk('example' in content);
+    assert.true(get(proxy, 'hasBufferedChanges'));
 
     proxy.discardBufferedChanges(['example']);
 
@@ -139,15 +139,15 @@ module('ember-buffered-proxy/mixin', function () {
 
     assert.ok('foo' in content);
     assert.ok('testing' in content);
-    assert.ok(!('bar' in content));
-    assert.ok(!('example' in content));
-    assert.equal(get(proxy, 'hasBufferedChanges'), false);
+    assert.notOk('bar' in content);
+    assert.notOk('example' in content);
+    assert.false(get(proxy, 'hasBufferedChanges'));
 
     assert.equal(get(proxy, 'baz'), 1);
     assert.equal(get(content, 'baz'), 1);
   });
 
-  test('aliased methods work', (assert) => {
+  test('aliased methods work', function (assert) {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const proxy = BufferedProxy.create({
       content: {
@@ -165,8 +165,8 @@ module('ember-buffered-proxy/mixin', function () {
       2,
       "Applying changes sets the content's property"
     );
-    assert.ok(
-      !get(proxy, 'hasChanges'),
+    assert.notOk(
+      get(proxy, 'hasChanges'),
       'Proxy has no changes after changes are applied'
     );
 
@@ -177,13 +177,13 @@ module('ember-buffered-proxy/mixin', function () {
       2,
       "Discarding changes resets the proxy's property"
     );
-    assert.ok(
-      !get(proxy, 'hasChanges'),
+    assert.notOk(
+      get(proxy, 'hasChanges'),
       'Proxy has no changes after changes are discarded'
     );
   });
 
-  test('allows passing other variables at .create time', (assert) => {
+  test('allows passing other variables at .create time', function (assert) {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const fakeContainer = EmberObject.create({});
 
@@ -208,7 +208,7 @@ module('ember-buffered-proxy/mixin', function () {
     );
   });
 
-  test('that .hasChanged() works', (assert) => {
+  test('that .hasChanged() works', function (assert) {
     const BufferedProxy = ObjectProxy.extend(Mixin);
     const content = {
       notifyPropertyChange() {},
@@ -218,32 +218,31 @@ module('ember-buffered-proxy/mixin', function () {
 
     set(proxy, 'foo', 1);
 
-    assert.equal(proxy.hasChanged('foo'), true);
-    assert.equal(proxy.hasChanged('bar'), false);
+    assert.true(proxy.hasChanged('foo'));
+    assert.false(proxy.hasChanged('bar'));
 
     set(proxy, 'bar', 1);
 
-    assert.equal(proxy.hasChanged('foo'), true);
-    assert.equal(proxy.hasChanged('bar'), true);
+    assert.true(proxy.hasChanged('foo'));
+    assert.true(proxy.hasChanged('bar'));
 
     proxy.applyBufferedChanges(['bar']);
 
     set(proxy, 'foobar', false);
 
-    assert.equal(proxy.hasChanged('foo'), true);
-    assert.equal(proxy.hasChanged('bar'), false);
-    assert.equal(proxy.hasChanged('foobar'), true);
+    assert.true(proxy.hasChanged('foo'));
+    assert.false(proxy.hasChanged('bar'));
+    assert.true(proxy.hasChanged('foobar'));
 
     proxy.applyBufferedChanges();
 
-    assert.equal(proxy.hasChanged('foo'), false);
-    assert.equal(proxy.hasChanged('bar'), false);
-    assert.equal(proxy.hasChanged('foobar'), false);
+    assert.false(proxy.hasChanged('foo'));
+    assert.false(proxy.hasChanged('bar'));
+    assert.false(proxy.hasChanged('foobar'));
 
-    assert.equal(proxy.hasChanged(), false, 'Not passing a key returns false');
-    assert.equal(
+    assert.false(proxy.hasChanged(), 'Not passing a key returns false');
+    assert.false(
       proxy.hasChanged('baz'),
-      false,
       'If the key does not exist on the proxy then return false'
     );
   });
