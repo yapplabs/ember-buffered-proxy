@@ -1,32 +1,24 @@
-/* eslint-disable ember/no-classic-classes */
-/* eslint-disable ember/no-get */
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 import { action } from '@ember/object';
 
-export default Controller.extend({
-  computedOnBuffer: computed('buffer.firstName', function () {
-    return this.get('buffer.firstName').split('').reverse().join('');
-  }),
+export default class extends Controller {
+  get computedOnBuffer() {
+    return this.buffer.get('firstName').split('').reverse().join('');
+  }
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
 
-    let user = {
+    this.user = {
       firstName: 'stefan',
       email: 'example@example.com',
     };
 
-    let buffer = BufferedProxy.create({
-      content: user,
+    this.buffer = BufferedProxy.create({
+      content: this.user,
     });
-
-    this.setProperties({
-      buffer: buffer,
-      user: user,
-    });
-  },
+  }
 
   @action
   applyChanges(field, ev) {
@@ -40,7 +32,7 @@ export default Controller.extend({
     } else {
       this.buffer.applyBufferedChanges();
     }
-  },
+  }
 
   @action
   discardChanges(field, ev) {
@@ -54,5 +46,5 @@ export default Controller.extend({
     } else {
       this.buffer.discardBufferedChanges();
     }
-  },
-});
+  }
+}
