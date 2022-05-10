@@ -39,6 +39,7 @@
   "dependencies": {
     "ember-cli-babel": "^7.26.10",
     "ember-cli-htmlbars": "^5.7.2",
+    "ember-compatibility-helpers": "^1.2.6",
     "ember-notify-property-change-polyfill": "^0.0.1"
   },
   "devDependencies": {
