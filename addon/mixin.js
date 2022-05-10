@@ -3,7 +3,13 @@
 import Mixin from '@ember/object/mixin';
 import { isArray } from '@ember/array';
 import { readOnly } from '@ember/object/computed';
-import { defineProperty, getProperties, set, get, notifyPropertyChange } from '@ember/object';
+import {
+  defineProperty,
+  getProperties,
+  set,
+  get,
+  notifyPropertyChange,
+} from '@ember/object';
 
 import { gte, lte } from 'ember-compatibility-helpers';
 
