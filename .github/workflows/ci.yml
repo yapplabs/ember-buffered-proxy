@@ -15,11 +15,13 @@
 #$ browsers:
 #$   - chrome
 #$ emberTryScenarios:
-#$   - scenario: ember-lts-3.12
+#$   - scenario: ember-3.13
 #$     allowedToFail: false
 #$   - scenario: ember-lts-3.16
 #$     allowedToFail: false
 #$   - scenario: ember-lts-3.20
+#$     allowedToFail: false
+#$   - scenario: ember-lts-3.24
 #$     allowedToFail: false
 #$   - scenario: ember-release
 #$     allowedToFail: false
@@ -186,6 +188,7 @@ jobs:
       fail-fast: false
       matrix:
         ember-try-scenario: [
+          ember-3.13,
           ember-lts-3.16,
           ember-lts-3.20,
           ember-lts-3.24,
