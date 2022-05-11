@@ -4,6 +4,7 @@
 
 ## v2.1.0 (2022-05-11)
 
+Drops support for Ember < 3.13. This should have been a major release. Apologies!
 #### :rocket: Enhancement
 * [#90](https://github.com/yapplabs/ember-buffered-proxy/pull/90) Conditionally choose notifyPropertyChange context based on Ember version ([@fsmanuel](https://github.com/fsmanuel)) Built on original work from @achambers.
 * [#87](https://github.com/yapplabs/ember-buffered-proxy/pull/87) Update ember-cli to 3.28 ([@fsmanuel](https://github.com/fsmanuel))
