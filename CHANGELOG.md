@@ -2,6 +2,15 @@
 
 
 
+
+## v2.1.1 (2022-05-11)
+
+#### :house: Internal
+* [#93](https://github.com/yapplabs/ember-buffered-proxy/pull/93) Remove ember-notify-property-change-polyfill ([@fsmanuel](https://github.com/fsmanuel))
+
+#### Committers: 1
+- Manuel Wiedenmann ([@fsmanuel](https://github.com/fsmanuel))
+
 ## v2.1.0 (2022-05-11)
 
 Drops support for Ember < 3.13. This should have been a major release. Apologies!
