@@ -1,6 +1,21 @@
 # Changelog
 
 
+
+## v2.1.0 (2022-05-11)
+
+#### :rocket: Enhancement
+* [#90](https://github.com/yapplabs/ember-buffered-proxy/pull/90) Conditionally choose notifyPropertyChange context based on Ember version ([@fsmanuel](https://github.com/fsmanuel)) Built on original work from @achambers.
+* [#87](https://github.com/yapplabs/ember-buffered-proxy/pull/87) Update ember-cli to 3.28 ([@fsmanuel](https://github.com/fsmanuel))
+
+#### :house: Internal
+* [#92](https://github.com/yapplabs/ember-buffered-proxy/pull/92) Set timeout for ci jobs ([@fsmanuel](https://github.com/fsmanuel))
+* [#91](https://github.com/yapplabs/ember-buffered-proxy/pull/91) Fix ci badge ([@fsmanuel](https://github.com/fsmanuel))
+
+#### Committers: 1
+- Manuel Wiedenmann ([@fsmanuel](https://github.com/fsmanuel))
+
+
 ## v2.0.0 (2021-08-03)
 
 #### :boom: Breaking Change
